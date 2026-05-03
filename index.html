@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desti's Journey - Interactive Ghibli Layout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital@0;1&family=Poppins:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for Theming */
+        :root {
+            --bg-main: #1a3861;
+            --bg-secondary: #112541;
+            --bg-card: #1e3f6e;
+            --bg-bottom: #f8f9fa;
+            --text-main: #ffffff;
+            --text-muted: #93c5fd; /* blue-300 */
+            --text-dark: #1a3861;
+            --text-dark-muted: #4b5563; /* gray-600 */
+            --border-color: rgba(255, 255, 255, 0.1);
+            --border-bottom: #d1d5db;
+            --btn-hover: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="light"] {
+            --bg-main: #e0f2fe; /* sky-100 */
+            --bg-secondary: #bae6fd; /* sky-200 */
+            --bg-card: #f0f9ff; /* sky-50 */
+            --bg-bottom: #ffffff;
+            --text-main: #0f172a; /* slate-900 */
+            --text-muted: #334155; /* slate-700 */
+            --text-dark: #0f172a;
+            --text-dark-muted: #475569; /* slate-600 */
+            --border-color: rgba(0, 0, 0, 0.1);
+            --border-bottom: #e2e8f0;
+            --btn-hover: rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            scroll-behavior: smooth;
+        }
+
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-quote { font-family: 'Playfair Display', serif; }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: #3b6399; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4a7ab5; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Dynamic classes utilizing CSS variables */
+        .dyn-bg { background-color: var(--bg-main); }
+        .dyn-bg-sec { background-color: var(--bg-secondary); }
+        .dyn-bg-card { background-color: var(--bg-card); }
+        .dyn-bg-bottom { background-color: var(--bg-bottom); }
+        .dyn-text { color: var(--text-main); }
+        .dyn-text-muted { color: var(--text-muted); }
+        .dyn-text-dark { color: var(--text-dark); }
+        .dyn-text-dark-muted { color: var(--text-dark-muted); }
+        .dyn-border { border-color: var(--border-color); }
+        .dyn-border-bottom { border-color: var(--border-bottom); }
+        .dyn-hover:hover { background-color: var(--btn-hover); }
+
+        /* Carousel Hover Zoom */
+        .carousel-img { transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .carousel-item:hover .carousel-img { transform: scale(1.08); }
+
+        /* Smooth Reveal Animation on Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Hero Load Animation */
+        .hero-fade-in {
+            animation: fadeInTop 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        @keyframes fadeInTop {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="dyn-bg dyn-text">
+
+    <!-- Navigation Bar (Floating) -->
+    <nav class="fixed top-0 w-full z-50 bg-black/20 backdrop-blur-md border-b border-white/10 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Left Nav: Links -->
+                <div class="flex gap-4">
+                    <a href="#profile" class="text-white text-xs md:text-sm font-semibold uppercase tracking-wider hover:text-yellow-400 transition">Profile</a>
+                    <a href="#gallery" class="text-white text-xs md:text-sm font-semibold uppercase tracking-wider hover:text-yellow-400 transition">Gallery</a>
+                    <a href="#story" class="text-white text-xs md:text-sm font-semibold uppercase tracking-wider hover:text-yellow-400 transition">Story</a>
+                </div>
+                
+                <!-- Right Nav: Controls -->
+                <div class="flex items-center gap-4">
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" onclick="toggleTheme()" class="text-white hover:text-yellow-400 transition focus:outline-none" title="Toggle Light/Dark Mode">
+                        <!-- Moon Icon Default -->
+                        <svg id="theme-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+                    <!-- Language Selector -->
+                    <div class="flex bg-black/40 rounded-full overflow-hidden border border-white/20">
+                        <button onclick="setLang('id')" id="btn-lang-id" class="px-3 py-1 text-xs font-bold text-white bg-white/20 transition">ID</button>
+                        <button onclick="setLang('en')" id="btn-lang-en" class="px-3 py-1 text-xs font-bold text-white hover:bg-white/20 transition">EN</button>
+                        <button onclick="setLang('jp')" id="btn-lang-jp" class="px-3 py-1 text-xs font-bold text-white hover:bg-white/20 transition">JP</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Hero / Header Image Section -->
+    <div class="relative w-full h-[50vh] md:h-[65vh] overflow-hidden dyn-bg-sec">
+        <!-- Big Hero Background -->
+        <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
+             alt="Japan Scenery" 
+             class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay">
+        
+        <!-- Gradient Overlay to blend with background -->
+        <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-main)] via-transparent to-transparent opacity-90 transition-colors duration-500"></div>
+    </div>
+
+    <!-- 2. Title & Meta Section -->
+    <div id="profile" class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 -mt-24 md:-mt-40 mb-10 pt-16 hero-fade-in">
+        <h1 data-i18n="title" class="font-poppins font-black text-4xl md:text-5xl lg:text-6xl tracking-tight dyn-text mb-2 drop-shadow-lg">
+            DESTI'S<br>JOURNEY
+        </h1>
+        <p data-i18n="meta" class="text-sm md:text-base font-medium dyn-text-muted tracking-wide">
+            2026 | 7 Days | Language : ID, EN, JP
+        </p>
+    </div>
+
+    <!-- 3. Profile Info Section -->
+    <div class="max-w-6xl mx-auto px-6 md:px-10 flex flex-col md:flex-row gap-8 md:gap-12 mb-16 reveal">
+        
+        <!-- Poster Thumbnail -->
+        <div class="w-32 md:w-48 shrink-0">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                 alt="Poster" 
+                 class="w-full h-auto rounded-lg shadow-[0_15px_30px_rgba(0,0,0,0.4)] border dyn-border transition-colors">
+            <div data-i18n="poster_title" class="text-center mt-3 font-poppins font-bold text-xl tracking-wider dyn-text">
+                DESTI
+            </div>
+        </div>
+
+        <!-- Synopsis & Credits -->
+        <div class="flex-1 flex flex-col justify-center">
+            <h3 data-i18n="author" class="font-bold dyn-text text-lg tracking-wide mb-1">Author: Desti</h3>
+            <p data-i18n="locations" class="text-sm dyn-text-muted font-medium mb-4">Locations : Tokyo University, Shibuya, Asakusa, Local Homestay</p>
+            
+            <p data-i18n="synopsis" class="text-sm md:text-base leading-relaxed mb-6 max-w-3xl dyn-text opacity-90 font-light">
+                Nama pemenang lomba disebut, dan itu namaku. Dari semua kemungkinan yang kubayangkan, ini yang paling tidak terduga: aku terbang ke Jepang. Awalnya aku merasa tidak percaya diri dan mengira keberhasilanku hanyalah kebetulan semata. Namun, perjalanan tujuh hari di negeri sakura ini perlahan merombak total cara pandangku tentang usaha, kedisiplinan, dan menemukan validasi dari dalam diri sendiri, bukan dari pengakuan orang lain.
+            </p>
+            
+            <!-- Tags (Genre style) -->
+            <div class="flex flex-wrap gap-3">
+                <button data-i18n="tag_1" class="border dyn-border rounded-full px-5 py-1.5 text-xs font-medium tracking-wide hover:bg-white/10 hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none">Documentary</button>
+                <button data-i18n="tag_2" class="border dyn-border rounded-full px-5 py-1.5 text-xs font-medium tracking-wide hover:bg-white/10 hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none">Personal Growth</button>
+                <button data-i18n="tag_3" class="border dyn-border rounded-full px-5 py-1.5 text-xs font-medium tracking-wide hover:bg-white/10 hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none">Slice of Life</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Interactive Carousel Gallery Section -->
+    <div id="gallery" class="w-full pt-10 reveal">
+        <div class="text-center mb-6 px-4 flex flex-col md:flex-row justify-between items-center max-w-[1400px] mx-auto">
+            <div class="w-10 hidden md:block"></div> <!-- spacer -->
+            <div>
+                <h4 data-i18n="gallery_title" class="font-poppins font-bold text-sm tracking-[0.3em] uppercase dyn-text mb-2">Gallery</h4>
+                <svg class="w-4 h-4 mx-auto dyn-text opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
+            <div class="mt-4 md:mt-0 flex gap-2">
+                <button onclick="scrollCarousel(-1)" class="w-10 h-10 rounded-full dyn-bg-card dyn-border border flex items-center justify-center dyn-hover dyn-text transition shadow-md focus:outline-none">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button onclick="scrollCarousel(1)" class="w-10 h-10 rounded-full dyn-bg-card dyn-border border flex items-center justify-center dyn-hover dyn-text transition shadow-md focus:outline-none">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Scrollable Carousel Container -->
+        <div class="max-w-[1400px] mx-auto px-4 relative mb-20">
+            <div id="carousel-container" class="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-6 scroll-smooth">
+                
+                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-xl border dyn-border shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1542051812899-25bb1c10777e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Shibuya">
+                    <div class="absolute bottom-4 left-4 bg-black/60 px-3 py-1 rounded text-white text-xs font-bold tracking-wider">SHIBUYA</div>
+                </div>
+                
+                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-xl border dyn-border shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Asakusa">
+                    <div class="absolute bottom-4 left-4 bg-black/60 px-3 py-1 rounded text-white text-xs font-bold tracking-wider">ASAKUSA</div>
+                </div>
+                
+                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-xl border dyn-border shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Tokyo Uni">
+                    <div class="absolute bottom-4 left-4 bg-black/60 px-3 py-1 rounded text-white text-xs font-bold tracking-wider">TOKYO UNIVERSITY</div>
+                </div>
+                
+                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-xl border dyn-border shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Nature">
+                    <div class="absolute bottom-4 left-4 bg-black/60 px-3 py-1 rounded text-white text-xs font-bold tracking-wider">UENO PARK</div>
+                </div>
+                
+                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-xl border dyn-border shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1528360354687-839420409a6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Homestay Food">
+                    <div class="absolute bottom-4 left-4 bg-black/60 px-3 py-1 rounded text-white text-xs font-bold tracking-wider">HOMESTAY MEALS</div>
+                </div>
+
+                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-xl border dyn-border shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1480796927426-f609979314bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Tokyo Streets">
+                    <div class="absolute bottom-4 left-4 bg-black/60 px-3 py-1 rounded text-white text-xs font-bold tracking-wider">TOKYO STREETS</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Centered Quote -->
+    <div class="text-center px-6 mb-20 max-w-4xl mx-auto reveal">
+        <p data-i18n="quote_text" class="font-quote italic font-normal text-lg md:text-xl dyn-text tracking-wide leading-relaxed opacity-75">
+            "Kadang Tuhan tidak menunggu kita sempurna dulu, Dia cuma menunggu kita mau melangkah."
+        </p>
+    </div>
+
+    <!-- 6. Bottom Story Section (Expanded Content) -->
+    <div id="story" class="dyn-bg-bottom w-full dyn-text-dark transition-colors duration-500 pt-8 reveal">
+        
+        <!-- Divider Bar -->
+        <div class="w-full dyn-border-bottom border-b py-4 px-6 md:px-10 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div data-i18n="bottom_bar_title" class="font-bold text-sm tracking-widest dyn-text-dark uppercase">
+                日本の旅 | Desti's Expanded Journal
+            </div>
+            <div class="flex items-center gap-4 text-gray-500">
+                <!-- Anchor back to top -->
+                <a href="#profile" class="flex items-center gap-2 hover:text-[#1a3861] transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                    <span data-i18n="back_to_top" class="text-xs font-bold uppercase tracking-wider">Back to Top</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Story Chapters (4 Column Grid with longer text) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 dyn-border-bottom border-b">
+            
+            <!-- Chapter 1: Tokyo Uni -->
+            <div class="p-8 dyn-border-bottom border-r border-b lg:border-b-0 hover:bg-black/5 transition cursor-default group reveal">
+                <h5 data-i18n="ch1_title" class="font-poppins font-bold text-xl dyn-text-dark mb-4 group-hover:text-yellow-600 transition">Universitas Tokyo</h5>
+                <p data-i18n="ch1_text" class="text-sm dyn-text-dark-muted leading-loose text-justify">
+                    Selama 5 hari aku belajar di lingkungan akademik bergengsi ini. Pengalaman ini bukan semata-mata tentang seberapa sulit kurikulum yang diberikan, melainkan tentang mengobservasi cara mereka berpikir secara kritis. Kedisiplinan mahasiswa di kelas berada di level yang benar-benar berbeda; waktu sangat dihargai dan etos kerja terlihat dari hal-hal kecil. Di aula kampus yang megah itu, aku menyadari bahwa dunia ini sangat luas dan aku masih memiliki banyak ruang kosong yang harus diisi untuk terus bertumbuh.
+                </p>
+            </div>
+
+            <!-- Chapter 2: Homestay -->
+            <div class="p-8 dyn-border-bottom border-r border-b lg:border-b-0 hover:bg-black/5 transition cursor-default group reveal">
+                <h5 data-i18n="ch2_title" class="font-poppins font-bold text-xl dyn-text-dark mb-4 group-hover:text-yellow-600 transition">Keluarga Baru</h5>
+                <p data-i18n="ch2_text" class="text-sm dyn-text-dark-muted leading-loose text-justify">
+                    Tinggal bersama keluarga asli Jepang selama 7 hari bukan sekadar mencari tempat menumpang tidur, melainkan sebuah pertukaran kehidupan. Awalnya terasa canggung karena keterbatasan bahasa; aku sering salah ucap dan mengandalkan bahasa tubuh. Namun, di meja makan yang hangat sambil menyantap masakan rumahan, aku belajar bahasa Jepang jauh lebih cepat dari buku teks mana pun. Keluarga ini menerima kekuranganku dengan senyum tulus yang meruntuhkan segala kecemasanku.
+                </p>
+            </div>
+
+            <!-- Chapter 3: Culture -->
+            <div class="p-8 dyn-border-bottom border-r border-b lg:border-b-0 hover:bg-black/5 transition cursor-default group reveal">
+                <h5 data-i18n="ch3_title" class="font-poppins font-bold text-xl dyn-text-dark mb-4 group-hover:text-yellow-600 transition">Tiga Pelajaran Utama</h5>
+                <p data-i18n="ch3_text" class="text-sm dyn-text-dark-muted leading-loose text-justify">
+                    Menginjakkan kaki di fasilitas umum Tokyo memberikan tiga pukulan realita. Pertama, disiplin yang sudah menjadi insting alami, bukan paksaan aturan. Kedua, kebersihan ekstrem yang dipertahankan karena rasa hormat pada orang lain yang akan menggunakan fasilitas yang sama. Ketiga, keramahan yang tetap hangat meski aku adalah orang asing yang sering tersesat di stasiun kereta. Melihat harmoni sosial ini memunculkan pertanyaan di benakku: jika mereka bisa menjadikan kebaikan sebagai kebiasaan sehari-hari, mengapa aku tidak bisa memulainya sekarang?
+                </p>
+            </div>
+
+            <!-- Chapter 4: Conclusion -->
+            <div class="p-8 hover:bg-black/5 transition cursor-default group reveal">
+                <h5 data-i18n="ch4_title" class="font-poppins font-bold text-xl dyn-text-dark mb-4 group-hover:text-yellow-600 transition">Sebuah Refleksi Akhir</h5>
+                <p data-i18n="ch4_text" class="text-sm dyn-text-dark-muted leading-loose text-justify">
+                    Perjalanan tak terduga ini akhirnya mengajarkanku sesuatu yang lebih dari sekadar mengagumi keindahan budaya asing. Ini adalah perjalanan menembus keraguanku sendiri. Aku belajar bahwa aku tidak perlu menunggu pengakuan manusia untuk merasa berharga. Ada banyak momen sepi saat aku berjalan menelusuri trotoar Tokyo, namun di sana aku merasa didampingi oleh keyakinan yang baru. Saat tak ada seorang pun yang melihat usahamu, bukan berarti jalanmu sia-sia. Percayalah, kau tidak pernah melangkah sendirian.
+                </p>
+            </div>
+
+        </div>
+        
+        <!-- Bottom Footer margin -->
+        <div class="py-10 text-center dyn-bg-bottom border-t border-gray-200/50 transition-colors reveal">
+            <p data-i18n="footer" class="text-xs text-gray-400 uppercase tracking-[0.4em] font-bold">End of the Journey</p>
+        </div>
+
+    </div>
+
+    <!-- JavaScript Logic: Translation, Theming, Carousel, Scroll Reveal -->
+    <script>
+        // --- 1. Language Translation Dictionary ---
+        const translations = {
+            id: {
+                title: "DESTI'S<br>JOURNEY",
+                meta: "2026 | 7 Hari | Bahasa : ID, EN, JP",
+                poster_title: "DESTI",
+                author: "Penulis: Desti",
+                locations: "Lokasi : Universitas Tokyo, Shibuya, Asakusa, Homestay Lokal",
+                synopsis: "Nama pemenang lomba disebut, dan itu namaku. Dari semua kemungkinan yang kubayangkan, ini yang paling tidak terduga: aku terbang ke Jepang. Awalnya aku merasa tidak percaya diri dan mengira keberhasilanku hanyalah kebetulan semata. Namun, perjalanan tujuh hari di negeri sakura ini perlahan merombak total cara pandangku tentang usaha, kedisiplinan, dan menemukan validasi dari dalam diri sendiri, bukan dari pengakuan orang lain.",
+                tag_1: "Dokumenter",
+                tag_2: "Pengembangan Diri",
+                tag_3: "Kisah Nyata",
+                rating_text: "Mengubah Hidup",
+                gallery_title: "Galeri",
+                quote_text: '"Kadang Tuhan tidak menunggu kita sempurna dulu, Dia cuma menunggu kita mau melangkah."',
+                bottom_bar_title: "日本の旅 | Jurnal Lengkap Desti",
+                back_to_top: "Kembali ke Atas",
+                ch1_title: "Universitas Tokyo",
+                ch1_text: "Selama 5 hari aku belajar di lingkungan akademik bergengsi ini. Pengalaman ini bukan semata-mata tentang seberapa sulit kurikulum yang diberikan, melainkan tentang mengobservasi cara mereka berpikir secara kritis. Kedisiplinan mahasiswa di kelas berada di level yang benar-benar berbeda; waktu sangat dihargai dan etos kerja terlihat dari hal-hal kecil. Di aula kampus yang megah itu, aku menyadari bahwa dunia ini sangat luas dan aku masih memiliki banyak ruang kosong yang harus diisi untuk terus bertumbuh.",
+                ch2_title: "Keluarga Baru",
+                ch2_text: "Tinggal bersama keluarga asli Jepang selama 7 hari bukan sekadar mencari tempat menumpang tidur, melainkan sebuah pertukaran kehidupan. Awalnya terasa canggung karena keterbatasan bahasa; aku sering salah ucap dan mengandalkan bahasa tubuh. Namun, di meja makan yang hangat sambil menyantap masakan rumahan, aku belajar bahasa Jepang jauh lebih cepat dari buku teks mana pun. Keluarga ini menerima kekuranganku dengan senyum tulus yang meruntuhkan segala kecemasanku.",
+                ch3_title: "Tiga Pelajaran Utama",
+                ch3_text: "Menginjakkan kaki di fasilitas umum Tokyo memberikan tiga pukulan realita. Pertama, disiplin yang sudah menjadi insting alami, bukan paksaan aturan. Kedua, kebersihan ekstrem yang dipertahankan karena rasa hormat pada orang lain yang akan menggunakan fasilitas yang sama. Ketiga, keramahan yang tetap hangat meski aku adalah orang asing yang sering tersesat di stasiun kereta. Melihat harmoni sosial ini memunculkan pertanyaan di benakku: jika mereka bisa menjadikan kebaikan sebagai kebiasaan sehari-hari, mengapa aku tidak bisa memulainya sekarang?",
+                ch4_title: "Sebuah Refleksi Akhir",
+                ch4_text: "Perjalanan tak terduga ini akhirnya mengajarkanku sesuatu yang lebih dari sekadar mengagumi keindahan budaya asing. Ini adalah perjalanan menembus keraguanku sendiri. Aku belajar bahwa aku tidak perlu menunggu pengakuan manusia untuk merasa berharga. Ada banyak momen sepi saat aku berjalan menelusuri trotoar Tokyo, namun di sana aku merasa didampingi oleh keyakinan yang baru. Saat tak ada seorang pun yang melihat usahamu, bukan berarti jalanmu sia-sia. Percayalah, kau tidak pernah melangkah sendirian.",
+                footer: "Akhir dari Perjalanan"
+            },
+            en: {
+                title: "DESTI'S<br>JOURNEY",
+                meta: "2026 | 7 Days | Language : ID, EN, JP",
+                poster_title: "DESTI",
+                author: "Author: Desti",
+                locations: "Locations : Tokyo University, Shibuya, Asakusa, Local Homestay",
+                synopsis: "The winner's name was announced, and it was mine. Of all the possibilities I imagined, this was the most unexpected: flying to Japan. Initially, I felt insecure and thought my success was mere coincidence. However, this seven-day journey in the land of cherry blossoms slowly completely transformed my perspective on effort, discipline, and finding validation from within, rather than from the acknowledgment of others.",
+                tag_1: "Documentary",
+                tag_2: "Personal Growth",
+                tag_3: "Slice of Life",
+                rating_text: "Life Changing",
+                gallery_title: "Gallery",
+                quote_text: '"Sometimes God does not wait for us to be perfect; He just waits for us to be willing to take a step."',
+                bottom_bar_title: "日本の旅 | Desti's Expanded Journal",
+                back_to_top: "Back to Top",
+                ch1_title: "The University of Tokyo",
+                ch1_text: "For 5 days, I studied in this prestigious academic environment. This experience was not just about the difficulty of the curriculum, but about observing their critical thinking process. The students' discipline in class was on a completely different level; time is highly valued and work ethic is visible in the smallest details. In those grand lecture halls, I realized how vast the world is and how much empty space I still have to fill in order to keep growing.",
+                ch2_title: "A New Family",
+                ch2_text: "Staying with a native Japanese family for 7 days was not just about finding a place to sleep, but an exchange of lives. Initially, it felt awkward due to the language barrier; I often misspoke and relied heavily on body language. However, at the warm dining table eating home-cooked meals, I learned Japanese much faster than from any textbook. This family accepted my shortcomings with sincere smiles that tore down all my anxieties.",
+                ch3_title: "Three Core Lessons",
+                ch3_text: "Stepping into Tokyo's public facilities delivered three reality checks. First, discipline that has become a natural instinct, not forced rules. Second, extreme cleanliness maintained out of respect for others who will use the same facilities. Third, genuine warmth even though I was a foreigner who frequently got lost in train stations. Witnessing this social harmony sparked a question in my mind: if they can make goodness a daily habit, why can't I start doing the same right now?",
+                ch4_title: "A Final Reflection",
+                ch4_text: "This unexpected journey ultimately taught me something more than just admiring the beauty of a foreign culture. It was a journey breaking through my own doubts. I learned that I do not need to wait for human validation to feel worthy. There were many quiet moments when I walked along the sidewalks of Tokyo, yet there I felt accompanied by a new conviction. Just because no one sees your effort doesn't mean your path is in vain. Believe me, you never walk alone.",
+                footer: "End of the Journey"
+            },
+            jp: {
+                title: "DESTI'S<br>JOURNEY",
+                meta: "2026年 | 7日間 | 言語 : ID, EN, JP",
+                poster_title: "デスティ",
+                author: "著者: デスティ",
+                locations: "場所 : 東京大学、渋谷、浅草、地元のホームステイ",
+                synopsis: "優勝者の名前が発表され、それは私の名前でした。想像していたすべての可能性の中で、日本へ飛ぶことは最も予想外のことでした。当初、私は自信がなく、自分の成功は単なる偶然だと思っていました。しかし、この桜の国での7日間の旅は、努力、規律、そして他人の承認からではなく内面から自己肯定感を見出すことへの私の考え方をゆっくりと完全に変えました。",
+                tag_1: "ドキュメンタリー",
+                tag_2: "自己成長",
+                tag_3: "日常の風景",
+                rating_text: "人生を変える",
+                gallery_title: "ギャラリー",
+                quote_text: '「神様は私たちが完璧になるのを待つのではなく、ただ私たちが一歩を踏み出すのを待っている時があります。」',
+                bottom_bar_title: "日本の旅 | デスティの詳細な日記",
+                back_to_top: "トップへ戻る",
+                ch1_title: "東京大学",
+                ch1_text: "5日間、私はこの権威ある学問的環境で学びました。この経験は、カリキュラムの難しさだけではなく、彼らの批判的思考プロセスを観察することについてでした。クラスでの学生の規律は全く異なるレベルにありました。時間は高く評価され、労働倫理は細部にまで表れています。壮大な講堂で、私は世界がどれほど広く、自分が成長し続けるために満たすべき空白がまだどれほどあるかを悟りました。",
+                ch2_title: "新しい家族",
+                ch2_text: "日本の家族と7日間滞在したことは、単に寝る場所を見つけることではなく、人生の交流でした。言葉の壁のせいで最初は気まずく感じました。言い間違えたり、身振りに大きく頼ったりしました。しかし、温かい食卓で家庭料理を食べながら、私はどの教科書よりもはるかに早く日本語を学びました。この家族は、私の不安をすべて打ち砕くような心からの笑顔で私の欠点を受け入れてくれました。",
+                ch3_title: "3つの重要な教訓",
+                ch3_text: "東京の公共施設に足を踏み入れると、3つの現実を突きつけられました。第一に、強制された規則ではなく、自然な本能となっている規律。第二に、同じ施設を利用する他者への敬意から維持されている極度の清潔さ。第三に、駅で頻繁に迷子になる外国人である私に対する心からの温かさ。この社会的調和を目の当たりにして、私の心に疑問が湧きました。彼らが善を日々の習慣にできるのなら、なぜ私は今すぐ同じことを始められないのだろうかと。",
+                ch4_title: "最後の考察",
+                ch4_text: "この予期せぬ旅は、最終的に私に異文化の美しさを賞賛する以上のことを教えてくれました。それは私自身の疑念を打ち破る旅でした。自分が価値があると感じるために人間の承認を待つ必要はないと学びました。東京の歩道を歩いていると静かな瞬間がたくさんありましたが、そこで私は新しい確信に寄り添われているように感じました。誰もあなたの努力を見ていないからといって、あなたの道が無駄であるという意味ではありません。信じてください、あなたは決して一人で歩いているのではありません。",
+                footer: "旅の終わり"
+            }
+        };
+
+        let currentLang = 'id';
+
+        function setLang(lang) {
+            currentLang = lang;
+            
+            // Update button styles
+            ['id', 'en', 'jp'].forEach(l => {
+                const btn = document.getElementById(`btn-lang-${l}`);
+                if(l === lang) {
+                    btn.classList.add('bg-white/20');
+                    btn.classList.remove('hover:bg-white/20');
+                } else {
+                    btn.classList.remove('bg-white/20');
+                    btn.classList.add('hover:bg-white/20');
+                }
+            });
+
+            // Update texts
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+        }
+
+        // --- 2. Theme Toggle Logic (Light / Dark Mode) ---
+        let isDarkMode = true; // Default Ghibli theme is dark
+        
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            
+            isDarkMode = !isDarkMode;
+            
+            if (!isDarkMode) {
+                // Switch to Light Mode
+                body.setAttribute('data-theme', 'light');
+                // Change icon to Sun
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>`;
+            } else {
+                // Switch to Dark Mode
+                body.removeAttribute('data-theme');
+                // Change icon to Moon
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>`;
+            }
+        }
+
+        // --- 3. Interactive Carousel Logic ---
+        function scrollCarousel(direction) {
+            const container = document.getElementById('carousel-container');
+            // Scroll by roughly the width of one item + gap
+            const scrollAmount = container.clientWidth * 0.4; 
+            container.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
+        }
+
+        // --- 4. Scroll Reveal Logic ---
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 50; 
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+
+        // Initialize defaults
+        setLang(currentLang);
+        reveal(); // Trigger reveal on load
+    </script>
+</body>
+</html>
