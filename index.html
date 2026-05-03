@@ -34,14 +34,14 @@
             --bg-card: #3D4A73; /* Biru Tua (Sedikit lebih terang) */
             --bg-bottom: #354266; /* Biru gelap muted agar menyatu dan tidak sakit mata */
             
-            --text-main: #FDFBF7;
+            --text-main: #FFFFFF; /* Putih murni agar kontras */
             --text-muted: #E2E8F0;
-            --text-dark: #FDFBF7;
-            --text-dark-muted: #E2E8F0;
+            --text-dark: #FFFFFF; /* Putih murni agar menonjol di mode gelap */
+            --text-dark-muted: #F8FAFC; 
             
-            --border-color: rgba(141, 169, 196, 0.3); /* Biru pastel transparan */
-            --border-bottom: rgba(141, 169, 196, 0.3);
-            --btn-hover: rgba(141, 169, 196, 0.3);
+            --border-color: rgba(255, 255, 255, 0.3); /* Putih transparan */
+            --border-bottom: rgba(255, 255, 255, 0.3);
+            --btn-hover: rgba(255, 255, 255, 0.15);
         }
 
         body {
@@ -210,12 +210,12 @@
     </div>
 
     <!-- 2. Title & Meta Section -->
-    <div id="profile" class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 -mt-32 md:-mt-48 mb-10 pt-10 hero-fade-in">
-        <h1 data-i18n="title" class="font-poppins font-black text-4xl md:text-5xl lg:text-6xl tracking-tight dyn-text mb-2 drop-shadow-sm">
+    <div id="profile" class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 -mt-40 md:-mt-52 mb-10 pt-4 hero-fade-in">
+        <h1 data-i18n="title" class="font-poppins font-black text-5xl md:text-6xl lg:text-7xl tracking-tight dyn-text mb-2 drop-shadow-sm">
             DESTI'S<br>JOURNEY
         </h1>
         <p data-i18n="meta" class="text-sm md:text-base font-medium dyn-text-muted tracking-wide">
-            2026 | 7 Days | Language : ID, EN, JP
+            Perjalanan 7 Hari Study Trip di Jepang: Cerita dan Pengalaman
         </p>
     </div>
 
@@ -227,7 +227,7 @@
             <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
                  alt="Poster" 
                  class="w-full h-auto rounded-xl shadow-lg border-4 dyn-border transition-colors">
-            <div data-i18n="poster_title" class="text-center mt-3 font-poppins font-bold text-lg tracking-wider dyn-text">
+            <div data-i18n="poster_title" class="text-center mt-3 font-poppins font-bold text-base md:text-lg tracking-wider dyn-text whitespace-nowrap">
                 Desti Puspita
             </div>
         </div>
@@ -392,7 +392,7 @@
         const translations = {
             id: {
                 title: "DESTI'S<br>JOURNEY",
-                meta: "2026 | 7 Hari | Bahasa : ID, EN, JP",
+                meta: "Perjalanan 7 Hari Study Trip di Jepang: Cerita dan Pengalaman",
                 poster_title: "Desti Puspita",
                 author: "Penulis: Desti Puspita",
                 locations: "Lokasi : Universitas Tokyo, Shibuya, Asakusa, Homestay Lokal",
@@ -416,7 +416,7 @@
             },
             en: {
                 title: "DESTI'S<br>JOURNEY",
-                meta: "2026 | 7 Days | Language : ID, EN, JP",
+                meta: "7-Day Study Trip in Japan: Stories and Experiences",
                 poster_title: "Desti Puspita",
                 author: "Author: Desti Puspita",
                 locations: "Locations : Tokyo University, Shibuya, Asakusa, Local Homestay",
@@ -440,7 +440,7 @@
             },
             jp: {
                 title: "DESTI'S<br>JOURNEY",
-                meta: "2026年 | 7日間 | 言語 : ID, EN, JP",
+                meta: "日本での7日間のスタディトリップ：物語と経験",
                 poster_title: "デスティ・プスピタ",
                 author: "著者: デスティ・プスピタ",
                 locations: "場所 : 東京大学、渋谷、浅草、地元のホームステイ",
