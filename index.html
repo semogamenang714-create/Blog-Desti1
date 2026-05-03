@@ -11,53 +11,53 @@
     <style>
         /* Variabel CSS untuk Tema */
         :root {
-            /* Tema Terang */
+            /* Tema Terang - Palet Putih, Pink, & Merah */
             --bg-main: #FFFFFF;
-            --bg-secondary: #FFD1DC; 
-            --bg-card: #FFF5F7;
-            --bg-nav: #FFD1DC; 
+            --bg-secondary: #FFB6C1; /* Pink Cerah */
+            --bg-card: #FFF5F6;      /* Putih Kemerahan sangat muda */
+            --nav-gradient: linear-gradient(90deg, #FFB6C1 0%, #FF4D4D 100%); /* Pink ke Merah */
             
-            --text-main: #4A4A4A; 
-            --text-muted: #718096; 
-            --text-dark: #2D3748; 
-            --text-dark-muted: #4A5568; 
+            --text-main: #4A1A1A;    /* Cokelat kemerahan gelap */
+            --text-muted: #8E5D5D; 
+            --text-dark: #2D0A0A; 
+            --text-dark-muted: #5C2D2D; 
             
-            --border-color: rgba(255, 182, 185, 0.4);
-            --border-bottom: rgba(255, 182, 185, 0.4);
-            --btn-hover: rgba(255, 209, 220, 0.5);
+            --border-color: rgba(255, 77, 77, 0.2); 
+            --border-bottom: rgba(255, 77, 77, 0.2);
+            --btn-hover: rgba(255, 182, 193, 0.5);
 
             /* Kawasan Jurnal */
-            --bg-bottom: #FAECEE; 
-            --text-bottom-heading: #2D3748;
-            --text-bottom-body: #4A5568;
-            --border-bottom-sec: rgba(255, 182, 185, 0.4);
-            --hover-bottom: rgba(255, 209, 220, 0.4);
-            --accent-bottom: #D53F8C;
+            --bg-bottom: #FFF0F2; 
+            --text-bottom-heading: #800020; 
+            --text-bottom-body: #5C2D2D;
+            --border-bottom-sec: rgba(255, 77, 77, 0.15);
+            --hover-bottom: rgba(255, 182, 193, 0.2);
+            --accent-bottom: #FF4D4D;
         }
 
         [data-theme="dark"] {
-            /* Tema Gelap */
-            --bg-main: #2A365C; 
-            --bg-secondary: #8DA9C4; 
-            --bg-card: #3D4A73; 
-            --bg-nav: #2A365C; 
+            /* Tema Gelap - No White Leaks */
+            --bg-main: #0F111A; 
+            --bg-secondary: #2D334D; 
+            --bg-card: #1A1C2C; 
+            --nav-gradient: linear-gradient(90deg, #1A1C2C 0%, #0F111A 100%);
             
-            --text-main: #FFFFFF; 
-            --text-muted: #E2E8F0;
+            --text-main: #E2E8F0; 
+            --text-muted: #94A3B8;
             --text-dark: #FFFFFF; 
-            --text-dark-muted: #F8FAFC; 
+            --text-dark-muted: #CBD5E0; 
             
-            --border-color: rgba(255, 255, 255, 0.3); 
-            --border-bottom: rgba(255, 255, 255, 0.3);
-            --btn-hover: rgba(255, 255, 255, 0.15);
+            --border-color: rgba(255, 255, 255, 0.1); 
+            --border-bottom: rgba(255, 255, 255, 0.05);
+            --btn-hover: rgba(255, 255, 255, 0.05);
 
-            /* Kawasan Jurnal Mode Gelap */
-            --bg-bottom: #FFFFFF; 
-            --text-bottom-heading: #2A365C; 
-            --text-bottom-body: #475569; 
-            --border-bottom-sec: rgba(155, 136, 237, 0.3); 
-            --hover-bottom: rgba(155, 136, 237, 0.1); 
-            --accent-bottom: #9B88ED; 
+            /* Kawasan Jurnal Mode Gelap - Fixed Background */
+            --bg-bottom: #0A0C14; 
+            --text-bottom-heading: #FFFFFF; 
+            --text-bottom-body: #94A3B8; 
+            --border-bottom-sec: rgba(255, 255, 255, 0.05); 
+            --hover-bottom: rgba(255, 255, 255, 0.03); 
+            --accent-bottom: #FF4D4D; 
         }
 
         body {
@@ -75,15 +75,16 @@
 
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-secondary); }
-        ::-webkit-scrollbar-thumb { background: var(--bg-bottom); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--accent-bottom); border-radius: 4px; }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         /* Global Dynamic Classes */
-        .dyn-bg-nav { background-color: var(--bg-nav); }
+        .dyn-bg-nav { background: var(--nav-gradient); }
         .dyn-bg-card { background-color: var(--bg-card); }
         .dyn-bg-sec { background-color: var(--bg-secondary); }
+        .dyn-bg-main { background-color: var(--bg-main); }
         .dyn-text-dark { color: var(--text-dark); }
         .dyn-border { border-color: var(--border-color); }
         .dyn-border-bottom { border-color: var(--border-bottom); }
@@ -99,12 +100,12 @@
         .meta-text {
             font-weight: 200;
             font-style: italic;
-            opacity: 0.8;
+            opacity: 0.9;
         }
 
-        /* Gallery Carousel - Larger Size */
+        /* Gallery Carousel */
         .carousel-img { transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .carousel-item:hover .carousel-img { transform: scale(1.1); }
+        .carousel-item:hover .carousel-img { transform: scale(1.08); }
 
         /* Animation Reveal */
         .reveal {
@@ -125,24 +126,12 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        #mobile-menu, #lang-dropdown {
-            transform-origin: top;
-            transition: all 0.2s ease-out;
-        }
-        .menu-open {
-            animation: slideDown 0.2s ease forwards;
-        }
-        @keyframes slideDown {
-            from { opacity: 0; transform: scaleY(0.95) translateY(-5px); }
-            to { opacity: 1; transform: scaleY(1) translateY(0); }
-        }
-
         .typing-cursor {
             display: inline-block;
-            width: 4px;
+            width: 3px;
             height: 1em;
             background-color: currentColor;
-            margin-left: 4px;
+            margin-left: 2px;
             vertical-align: text-bottom;
             animation: blink 0.8s step-end infinite;
         }
@@ -150,163 +139,188 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
+
+        .gallery-title-wrapper {
+            background: var(--bg-secondary);
+            padding: 0.75rem 2.5rem;
+            border-radius: 9999px;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.15);
+        }
     </style>
 </head>
-<body class="dyn-bg dyn-text">
+<body class="dyn-bg-main dyn-text">
 
-    <!-- Navigasi -->
+    <!-- Navigasi - Slimmer & Integrated (Pink to Red Gradient) -->
     <nav class="fixed top-0 w-full z-50 dyn-bg-nav border-b dyn-border-bottom transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="font-poppins font-bold tracking-widest dyn-text-dark text-lg md:text-xl">
+            <div class="flex items-center justify-between h-12 md:h-14">
+                <div class="font-poppins font-bold tracking-widest text-white text-base md:text-lg">
                     JOURNEY
                 </div>
 
-                <div class="flex items-center gap-3 sm:gap-8">
-                    <div class="hidden md:flex items-center gap-8 mr-4">
-                        <a href="#profile" class="dyn-text-dark text-sm font-semibold uppercase tracking-wider hover:opacity-60 transition">Profile</a>
-                        <a href="#gallery" class="dyn-text-dark text-sm font-semibold uppercase tracking-wider hover:opacity-60 transition">Gallery</a>
-                        <a href="#story" class="dyn-text-dark text-sm font-semibold uppercase tracking-wider hover:opacity-60 transition">Story</a>
+                <div class="flex items-center gap-2 sm:gap-6">
+                    <div class="hidden md:flex items-center gap-6 mr-4">
+                        <a href="#profile" class="text-white text-[10px] font-bold uppercase tracking-widest hover:opacity-70 transition">Profile</a>
+                        <a href="#gallery" class="text-white text-[10px] font-bold uppercase tracking-widest hover:opacity-70 transition">Gallery</a>
+                        <a href="#story" class="text-white text-[10px] font-bold uppercase tracking-widest hover:opacity-70 transition">Story</a>
                     </div>
                     
-                    <button id="theme-toggle" onclick="toggleTheme()" class="dyn-text-dark hover:opacity-60 transition focus:outline-none p-1">
-                        <svg id="theme-icon" class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    <button id="theme-toggle" onclick="toggleTheme()" class="text-white hover:opacity-70 transition focus:outline-none p-1.5">
+                        <svg id="theme-icon" class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                     </button>
 
                     <!-- Language Dropdown -->
                     <div class="relative inline-block text-left">
-                        <button id="lang-menu-btn" onclick="toggleLangDropdown()" class="flex items-center gap-1 dyn-text-dark font-bold text-xs md:text-sm uppercase px-3 py-1.5 md:px-4 md:py-2 rounded-full border dyn-border dyn-hover transition focus:outline-none">
+                        <button id="lang-menu-btn" onclick="toggleLangDropdown()" class="flex items-center gap-1 text-white font-bold text-[9px] md:text-[11px] uppercase px-2.5 py-1 md:px-3 md:py-1.5 rounded-full border border-white/40 bg-white/10 hover:bg-white/20 transition focus:outline-none">
                             <span id="current-lang-label">IDN</span>
-                            <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            <svg class="w-2.5 h-2.5 md:w-3 md:h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         
-                        <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-32 rounded-xl shadow-lg bg-[var(--bg-card)] ring-1 ring-black ring-opacity-5 focus:outline-none z-50 border dyn-border overflow-hidden">
+                        <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-28 rounded-xl shadow-lg dyn-bg-card ring-1 ring-black ring-opacity-5 focus:outline-none z-50 border dyn-border overflow-hidden">
                             <div class="py-1">
-                                <button onclick="setLang('id')" class="block w-full text-left px-4 py-3 text-xs font-bold dyn-text-dark dyn-hover transition uppercase">IDN</button>
-                                <button onclick="setLang('en')" class="block w-full text-left px-4 py-3 text-xs font-bold dyn-text-dark dyn-hover transition uppercase">ENGLISH</button>
-                                <button onclick="setLang('jp')" class="block w-full text-left px-4 py-3 text-xs font-bold dyn-text-dark dyn-hover transition uppercase">日本語</button>
+                                <button onclick="setLang('id')" class="block w-full text-left px-3 py-2 text-[10px] font-bold dyn-text-dark dyn-hover transition uppercase">IDN</button>
+                                <button onclick="setLang('en')" class="block w-full text-left px-3 py-2 text-[10px] font-bold dyn-text-dark dyn-hover transition uppercase">ENGLISH</button>
+                                <button onclick="setLang('jp')" class="block w-full text-left px-3 py-2 text-[10px] font-bold dyn-text-dark dyn-hover transition uppercase">日本語</button>
                             </div>
                         </div>
                     </div>
 
-                    <button id="hamburger-btn" onclick="toggleMenu()" class="md:hidden dyn-text-dark focus:outline-none p-1 hover:opacity-60 transition">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <circle cx="12" cy="5" r="2.5" />
-                            <circle cx="12" cy="12" r="2.5" />
-                            <circle cx="12" cy="19" r="2.5" />
+                    <button id="hamburger-btn" onclick="toggleMenu()" class="md:hidden text-white focus:outline-none p-1 hover:opacity-70 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <circle cx="12" cy="5" r="2" />
+                            <circle cx="12" cy="12" r="2" />
+                            <circle cx="12" cy="19" r="2" />
                         </svg>
                     </button>
                 </div>
             </div>
         </div>
 
-        <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 w-full bg-[var(--bg-card)] border-b dyn-border-bottom shadow-lg">
-            <div class="px-4 py-3 space-y-2">
-                <a href="#profile" onclick="toggleMenu()" class="block px-4 py-3 dyn-text-dark text-sm font-semibold uppercase tracking-wider dyn-hover rounded-lg transition">Profile</a>
-                <a href="#gallery" onclick="toggleMenu()" class="block px-4 py-3 dyn-text-dark text-sm font-semibold uppercase tracking-wider dyn-hover rounded-lg transition">Gallery</a>
-                <a href="#story" onclick="toggleMenu()" class="block px-4 py-3 dyn-text-dark text-sm font-semibold uppercase tracking-wider dyn-hover rounded-lg transition">Story</a>
+        <div id="mobile-menu" class="hidden md:hidden absolute top-12 left-0 w-full bg-[var(--bg-card)] border-b dyn-border-bottom shadow-lg">
+            <div class="px-4 py-3 space-y-1">
+                <a href="#profile" onclick="toggleMenu()" class="block px-4 py-2 dyn-text-dark text-[11px] font-bold uppercase tracking-wider dyn-hover rounded-lg transition">Profile</a>
+                <a href="#gallery" onclick="toggleMenu()" class="block px-4 py-2 dyn-text-dark text-[11px] font-bold uppercase tracking-wider dyn-hover rounded-lg transition">Gallery</a>
+                <a href="#story" onclick="toggleMenu()" class="block px-4 py-2 dyn-text-dark text-[11px] font-bold uppercase tracking-wider dyn-hover rounded-lg transition">Story</a>
             </div>
         </div>
     </nav>
 
     <!-- 1. Hero Image -->
-    <div class="relative w-full h-[45vh] md:h-[60vh] overflow-hidden dyn-bg-sec">
+    <div class="relative w-full h-[40vh] md:h-[55vh] overflow-hidden dyn-bg-sec">
         <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
              alt="Japan Scenery" 
              class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay">
-        <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-main)] via-[var(--bg-main)]/30 to-transparent opacity-95 transition-colors duration-500"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-main)] via-[var(--bg-main)]/40 to-transparent opacity-95 transition-colors duration-500"></div>
     </div>
 
     <!-- 2. Title Section -->
-    <div id="profile-trigger" class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 -mt-32 md:-mt-44 mb-8 pt-4 hero-fade-in">
-        <h1 data-i18n="title" class="font-poppins font-black text-3xl md:text-5xl lg:text-6xl tracking-tight dyn-text mb-2 drop-shadow-sm">
+    <div id="profile-trigger" class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 -mt-24 md:-mt-40 mb-8 pt-4 hero-fade-in">
+        <h1 data-i18n="title" class="font-poppins font-black text-4xl md:text-5xl lg:text-7xl tracking-tighter dyn-text-dark mb-4 leading-[1.1] drop-shadow-sm">
             DESTI'S<br>JOURNEY
         </h1>
-        <p data-i18n="meta" class="meta-text text-xs md:text-base dyn-text-muted tracking-wide max-w-2xl">
-            Perjalanan 7 Hari Study Trip di Jepang: Cerita dan Pengalaman
-        </p>
+        <div class="max-w-xl">
+            <p data-i18n="meta" class="meta-text text-[13px] md:text-base dyn-text-muted tracking-wide leading-relaxed">
+                Perjalanan 7 Hari Study Trip di Jepang:<br>Cerita dan Pengalaman
+            </p>
+        </div>
     </div>
 
     <!-- 3. Profile Information Card -->
     <div class="max-w-6xl mx-auto px-4 md:px-10 mb-16">
-        <div id="profile" class="dyn-bg-card border dyn-border rounded-[2rem] p-6 md:p-12 flex flex-col md:flex-row gap-8 md:gap-12 shadow-sm reveal">
-            <div class="w-full md:w-[320px] shrink-0">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
-                     alt="Poster" 
-                     class="w-full h-auto rounded-2xl shadow-lg border-4 dyn-border transition-colors">
-                <div data-i18n="poster_title" class="text-center mt-6 font-poppins font-semibold text-[10px] md:text-xs tracking-[0.4em] uppercase dyn-text bg-[var(--bg-secondary)] py-2.5 rounded-full shadow-sm whitespace-nowrap opacity-90">
+        <div id="profile" class="dyn-bg-card border dyn-border rounded-[2.5rem] p-6 md:p-12 flex flex-col md:flex-row gap-8 md:gap-12 shadow-sm reveal">
+            <div class="w-full md:w-[300px] shrink-0">
+                <div class="relative group">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                         alt="Poster" 
+                         class="w-full h-auto rounded-3xl shadow-md border-4 dyn-border transition-all duration-500 group-hover:scale-[1.02]">
+                </div>
+                <div data-i18n="poster_title" class="text-center mt-6 font-poppins font-bold text-[10px] md:text-xs tracking-[0.4em] uppercase text-white bg-red-400 py-2.5 rounded-full shadow-sm whitespace-nowrap opacity-95">
                     Desti Puspita
                 </div>
             </div>
 
             <div class="flex-1 flex flex-col justify-center">
-                <h3 data-i18n="author" class="font-bold dyn-text text-lg md:text-xl tracking-wide mb-1">Penulis: Desti Puspita</h3>
-                <p data-i18n="locations" class="text-xs md:text-sm dyn-text-muted font-medium mb-6">Lokasi : Universitas Tokyo, Shibuya, Asakusa, Homestay Lokal</p>
+                <h3 data-i18n="author" class="font-bold dyn-text-dark text-xl md:text-2xl tracking-tight mb-2">Penulis: Desti Puspita</h3>
+                <p data-i18n="locations" class="text-[11px] md:text-sm dyn-text-muted font-medium mb-6 uppercase tracking-widest">Lokasi : Universitas Tokyo, Shibuya, Asakusa, Homestay Lokal</p>
                 
-                <p data-i18n="synopsis" class="text-sm md:text-base leading-relaxed mb-8 max-w-3xl dyn-text opacity-90 font-light text-justify">
+                <p data-i18n="synopsis" class="text-[13px] md:text-base leading-loose mb-8 max-w-3xl dyn-text-dark opacity-90 font-light text-justify">
                     Nama pemenang lomba disebut, dan itu namaku. Dari semua kemungkinan yang kubayangkan, ini yang paling tidak terduga: aku terbang ke Jepang. Awalnya aku merasa tidak percaya diri dan mengira keberhasilanku hanyalah kebetulan semata. Namun, perjalanan tujuh hari di negeri sakura ini perlahan merombak total cara pandangku tentang usaha, kedisiplinan, dan menemukan validasi dari dalam diri sendiri.
                 </p>
                 
                 <div class="flex flex-wrap gap-3">
-                    <button data-i18n="tag_1" class="border dyn-border bg-[var(--bg-main)] rounded-full px-5 py-1.5 text-[10px] md:text-xs font-semibold tracking-wide dyn-hover hover:scale-105 active:scale-95 transition-all duration-300 shadow-sm focus:outline-none">Dokumenter</button>
-                    <button data-i18n="tag_2" class="border dyn-border bg-[var(--bg-main)] rounded-full px-5 py-1.5 text-[10px] md:text-xs font-semibold tracking-wide dyn-hover hover:scale-105 active:scale-95 transition-all duration-300 shadow-sm focus:outline-none">Pengembangan Diri</button>
-                    <button data-i18n="tag_3" class="border dyn-border bg-[var(--bg-main)] rounded-full px-5 py-1.5 text-[10px] md:text-xs font-semibold tracking-wide dyn-hover hover:scale-105 active:scale-95 transition-all duration-300 shadow-sm focus:outline-none">Kisah Nyata</button>
+                    <span data-i18n="tag_1" class="border dyn-border dyn-bg-main rounded-full px-5 py-1.5 text-[9px] md:text-xs font-bold tracking-widest uppercase dyn-accent-hover hover:opacity-80 transition-all shadow-sm">Dokumenter</span>
+                    <span data-i18n="tag_2" class="border dyn-border dyn-bg-main rounded-full px-5 py-1.5 text-[9px] md:text-xs font-bold tracking-widest uppercase dyn-accent-hover hover:opacity-80 transition-all shadow-sm">Self-Growth</span>
+                    <span data-i18n="tag_3" class="border dyn-border dyn-bg-main rounded-full px-5 py-1.5 text-[9px] md:text-xs font-bold tracking-widest uppercase dyn-accent-hover hover:opacity-80 transition-all shadow-sm">True Story</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 4. Gallery - Larger Sizing -->
+    <!-- 4. Gallery - Pink/Red Palette -->
     <div id="gallery" class="w-full pt-10 reveal">
-        <div class="text-center mb-6 px-4 flex flex-col md:flex-row justify-between items-center max-w-[1400px] mx-auto">
+        <div class="text-center mb-10 px-4 flex flex-col md:flex-row justify-between items-center max-w-[1400px] mx-auto gap-6">
             <div class="w-10 hidden md:block"></div>
-            <div>
-                <h4 data-i18n="gallery_title" class="font-poppins font-bold text-sm tracking-[0.3em] uppercase dyn-text mb-2">Galeri</h4>
-                <div class="w-16 h-1 bg-[var(--bg-secondary)] mx-auto rounded-full"></div>
+            <div class="gallery-title-wrapper">
+                <h4 data-i18n="gallery_title" class="font-poppins font-black text-xl md:text-3xl tracking-[0.2em] uppercase text-white">Galeri</h4>
             </div>
-            <div class="mt-4 md:mt-0 flex gap-2">
-                <button onclick="scrollCarousel(-1)" class="w-10 h-10 rounded-full dyn-bg-card dyn-border border flex items-center justify-center dyn-hover dyn-text transition shadow-sm focus:outline-none">
+            <div class="flex gap-2">
+                <button onclick="scrollCarousel(-1)" class="w-10 h-10 rounded-full dyn-bg-card dyn-border border flex items-center justify-center dyn-hover dyn-text-dark transition shadow-sm">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                 </button>
-                <button onclick="scrollCarousel(1)" class="w-10 h-10 rounded-full dyn-bg-card dyn-border border flex items-center justify-center dyn-hover dyn-text transition shadow-sm focus:outline-none">
+                <button onclick="scrollCarousel(1)" class="w-10 h-10 rounded-full dyn-bg-card dyn-border border flex items-center justify-center dyn-hover dyn-text-dark transition shadow-sm">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                 </button>
             </div>
         </div>
 
         <div class="max-w-[1400px] mx-auto px-4 relative mb-20">
-            <div id="carousel-container" class="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-6 scroll-smooth pt-4">
-                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[50%] lg:w-[45%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
-                    <img src="https://images.unsplash.com/photo-1542051812899-25bb1c10777e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Shibuya">
-                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm uppercase">Shibuya</div>
+            <div id="carousel-container" class="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-10 scroll-smooth">
+                <!-- 8 Photos -->
+                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[45%] lg:w-[40%] overflow-hidden dyn-bg-sec aspect-video relative rounded-3xl border dyn-border shadow-md">
+                    <img src="https://images.unsplash.com/photo-1542051812899-25bb1c10777e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover" alt="Shibuya">
+                    <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-[10px] text-red-600 font-bold tracking-widest uppercase">Shibuya</div>
                 </div>
-                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[50%] lg:w-[45%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
-                    <img src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Asakusa">
-                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm uppercase">Asakusa</div>
+                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[45%] lg:w-[40%] overflow-hidden dyn-bg-sec aspect-video relative rounded-3xl border dyn-border shadow-md">
+                    <img src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover" alt="Asakusa">
+                    <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-[10px] text-red-600 font-bold tracking-widest uppercase">Asakusa</div>
                 </div>
-                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[50%] lg:w-[45%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
-                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Tokyo Uni">
-                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm uppercase">Tokyo University</div>
+                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[45%] lg:w-[40%] overflow-hidden dyn-bg-sec aspect-video relative rounded-3xl border dyn-border shadow-md">
+                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover" alt="Tokyo Uni">
+                    <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-[10px] text-red-600 font-bold tracking-widest uppercase">Tokyo University</div>
                 </div>
-                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[50%] lg:w-[45%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
-                    <img src="https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Nature">
-                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm uppercase">Ueno Park</div>
+                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[45%] lg:w-[40%] overflow-hidden dyn-bg-sec aspect-video relative rounded-3xl border dyn-border shadow-md">
+                    <img src="https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover" alt="Nature">
+                    <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-[10px] text-red-600 font-bold tracking-widest uppercase">Ueno Park</div>
                 </div>
-                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[50%] lg:w-[45%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
-                    <img src="https://images.unsplash.com/photo-1528360354687-839420409a6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Homestay">
-                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm uppercase">Homestay Meals</div>
+                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[45%] lg:w-[40%] overflow-hidden dyn-bg-sec aspect-video relative rounded-3xl border dyn-border shadow-md">
+                    <img src="https://images.unsplash.com/photo-1528360354687-839420409a6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover" alt="Homestay">
+                    <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-[10px] text-red-600 font-bold tracking-widest uppercase">Homestay Meals</div>
+                </div>
+                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[45%] lg:w-[40%] overflow-hidden dyn-bg-sec aspect-video relative rounded-3xl border dyn-border shadow-md">
+                    <img src="https://images.unsplash.com/photo-1526481280693-3bfa7561693f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover" alt="Torii">
+                    <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-[10px] text-red-600 font-bold tracking-widest uppercase">Traditional Shrine</div>
+                </div>
+                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[45%] lg:w-[40%] overflow-hidden dyn-bg-sec aspect-video relative rounded-3xl border dyn-border shadow-md">
+                    <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover" alt="Kyoto">
+                    <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-[10px] text-red-600 font-bold tracking-widest uppercase">City Landscape</div>
+                </div>
+                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[45%] lg:w-[40%] overflow-hidden dyn-bg-sec aspect-video relative rounded-3xl border dyn-border shadow-md">
+                    <img src="https://images.unsplash.com/photo-1524230572899-a752b3835840?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover" alt="Train">
+                    <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-[10px] text-red-600 font-bold tracking-widest uppercase">Shinkansen Ride</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 5. Centered Quote: Mobile 2 Lines Constraint -->
+    <!-- 5. Centered Quote -->
     <div class="text-center px-6 mb-24 max-w-4xl mx-auto reveal">
-        <div class="max-w-[320px] md:max-w-3xl mx-auto">
-            <p data-i18n="quote_text" class="font-quote italic font-normal text-base md:text-2xl lg:text-3xl dyn-text tracking-wide leading-relaxed opacity-80 mb-6">
+        <div class="max-w-[300px] md:max-w-3xl mx-auto flex flex-col items-center">
+            <p data-i18n="quote_text" class="font-quote italic font-medium text-lg md:text-2xl lg:text-3xl dyn-text-dark tracking-wide leading-snug md:leading-relaxed opacity-90 mb-4 text-center">
                 "Kadang Tuhan tidak menunggu kita sempurna dulu, Dia cuma menunggu kita mau melangkah."
             </p>
-            <p class="font-light text-[9px] md:text-xs tracking-[0.4em] uppercase opacity-40 dyn-text">
+            <div class="w-12 h-[1px] bg-red-300 mb-4"></div>
+            <p class="font-bold text-[8px] md:text-[10px] tracking-[0.4em] uppercase text-red-400 opacity-60">
                 desti puspita
             </p>
         </div>
@@ -315,52 +329,52 @@
     <!-- 6. Bottom Story Journal -->
     <div id="story" class="dyn-bg-bottom w-full transition-colors duration-500 pt-8 reveal shadow-inner">
         <div class="w-full border-b dyn-border-bottom-sec py-4 px-6 md:px-10 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div data-i18n="bottom_bar_title" class="font-bold text-sm tracking-widest dyn-text-bottom-h uppercase">
+            <div data-i18n="bottom_bar_title" class="font-bold text-xs tracking-[0.2em] dyn-text-bottom-h uppercase">
                 日本の旅 | Jurnal Lengkap Desti
             </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 border-b dyn-border-bottom-sec">
             <div class="p-8 border-r border-b lg:border-b-0 dyn-border-bottom-sec dyn-hover-bottom transition cursor-default group reveal">
-                <div class="overflow-hidden rounded-xl mb-5 shadow-sm">
+                <div class="overflow-hidden rounded-2xl mb-5 shadow-sm">
                     <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Tokyo Uni" class="w-full aspect-video object-cover group-hover:scale-110 transition-transform duration-700">
                 </div>
-                <h5 data-i18n="ch1_title" class="font-poppins font-bold text-lg md:text-xl dyn-text-bottom-h mb-4 dyn-accent-hover transition">Universitas Tokyo</h5>
-                <p data-i18n="ch1_text" class="text-sm dyn-text-bottom-p leading-loose text-justify">Selama 5 hari aku belajar di lingkungan akademik bergengsi ini. Kedisiplinan mahasiswa di kelas berada di level yang benar-benar berbeda.</p>
+                <h5 data-i18n="ch1_title" class="font-poppins font-bold text-lg md:text-xl dyn-text-bottom-h mb-3 dyn-accent-hover transition">Universitas Tokyo</h5>
+                <p data-i18n="ch1_text" class="text-[13px] dyn-text-bottom-p leading-relaxed text-justify opacity-80">Selama 5 hari aku belajar di lingkungan akademik bergengsi ini. Kedisiplinan mahasiswa di kelas berada di level yang benar-benar berbeda.</p>
             </div>
 
             <div class="p-8 border-r border-b lg:border-b-0 dyn-border-bottom-sec dyn-hover-bottom transition cursor-default group reveal">
-                <div class="overflow-hidden rounded-xl mb-5 shadow-sm">
+                <div class="overflow-hidden rounded-2xl mb-5 shadow-sm">
                     <img src="https://images.unsplash.com/photo-1528360354687-839420409a6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Homestay" class="w-full aspect-video object-cover group-hover:scale-110 transition-transform duration-700">
                 </div>
-                <h5 data-i18n="ch2_title" class="font-poppins font-bold text-lg md:text-xl dyn-text-bottom-h mb-4 dyn-accent-hover transition">Keluarga Baru</h5>
-                <p data-i18n="ch2_text" class="text-sm dyn-text-bottom-p leading-loose text-justify">Tinggal bersama keluarga asli Jepang selama 7 hari bukan sekadar mencari tempat tidur, melainkan pertukaran kehidupan yang hangat.</p>
+                <h5 data-i18n="ch2_title" class="font-poppins font-bold text-lg md:text-xl dyn-text-bottom-h mb-3 dyn-accent-hover transition">Keluarga Baru</h5>
+                <p data-i18n="ch2_text" class="text-[13px] dyn-text-bottom-p leading-relaxed text-justify opacity-80">Tinggal bersama keluarga asli Jepang selama 7 hari bukan sekadar mencari tempat tidur, melainkan pertukaran kehidupan yang hangat.</p>
             </div>
 
             <div class="p-8 border-r border-b lg:border-b-0 dyn-border-bottom-sec dyn-hover-bottom transition cursor-default group reveal">
-                <div class="overflow-hidden rounded-xl mb-5 shadow-sm">
+                <div class="overflow-hidden rounded-2xl mb-5 shadow-sm">
                     <img src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Culture" class="w-full aspect-video object-cover group-hover:scale-110 transition-transform duration-700">
                 </div>
-                <h5 data-i18n="ch3_title" class="font-poppins font-bold text-xl dyn-text-bottom-h mb-4 dyn-accent-hover transition">Tiga Pelajaran Utama</h5>
-                <p data-i18n="ch3_text" class="text-sm dyn-text-bottom-p leading-loose text-justify">Kedisiplinan yang sudah menjadi insting alami, kebersihan ekstrem, dan keramahan yang tulus meski kepada orang asing.</p>
+                <h5 data-i18n="ch3_title" class="font-poppins font-bold text-lg md:text-xl dyn-text-bottom-h mb-3 dyn-accent-hover transition">Tiga Pelajaran Utama</h5>
+                <p data-i18n="ch3_text" class="text-[13px] dyn-text-bottom-p leading-relaxed text-justify opacity-80">Kedisiplinan yang sudah menjadi insting alami, kebersihan ekstrem, dan keramahan yang tulus meski kepada orang asing.</p>
             </div>
 
             <div class="p-8 dyn-hover-bottom transition cursor-default group reveal">
-                <div class="overflow-hidden rounded-xl mb-5 shadow-sm">
+                <div class="overflow-hidden rounded-2xl mb-5 shadow-sm">
                     <img src="https://images.unsplash.com/photo-1542051812899-25bb1c10777e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Reflection" class="w-full aspect-video object-cover group-hover:scale-110 transition-transform duration-700">
                 </div>
-                <h5 data-i18n="ch4_title" class="font-poppins font-bold text-lg md:text-xl dyn-text-bottom-h mb-4 dyn-accent-hover transition">Sebuah Refleksi Akhir</h5>
-                <p data-i18n="ch4_text" class="text-sm dyn-text-bottom-p leading-loose text-justify">Perjalanan tak terduga ini akhirnya mengajarkanku sesuatu yang lebih dari sekadar mengagumi keindahan budaya asing.</p>
+                <h5 data-i18n="ch4_title" class="font-poppins font-bold text-lg md:text-xl dyn-text-bottom-h mb-3 dyn-accent-hover transition">Sebuah Refleksi Akhir</h5>
+                <p data-i18n="ch4_text" class="text-[13px] dyn-text-bottom-p leading-relaxed text-justify opacity-80">Perjalanan tak terduga ini akhirnya mengajarkanku sesuatu yang lebih dari sekadar mengagumi keindahan budaya asing.</p>
             </div>
         </div>
         
-        <!-- Footer & Visible Back to Top Button -->
-        <div class="py-14 text-center dyn-bg-bottom border-t dyn-border-bottom-sec transition-colors reveal relative">
-            <p data-i18n="footer" class="text-xs dyn-text-bottom-p uppercase tracking-[0.4em] font-bold opacity-60">End of the Journey</p>
+        <!-- Footer -->
+        <div class="py-12 text-center dyn-bg-bottom border-t dyn-border-bottom-sec transition-colors reveal relative">
+            <p data-i18n="footer" class="text-[9px] md:text-xs dyn-text-bottom-p uppercase tracking-[0.5em] font-black opacity-30">End of the Journey</p>
             
-            <a href="#profile-trigger" class="absolute bottom-6 right-6 md:right-10 flex items-center gap-2 opacity-60 hover:opacity-100 transition duration-300 dyn-text-bottom-h focus:outline-none z-40 group">
-                <span data-i18n="back_to_top" class="font-light text-xs lowercase tracking-widest group-hover:translate-x-[-2px] transition-transform">kembali ke atas</span>
-                <svg class="w-4 h-4 stroke-[1.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+            <a href="#profile-trigger" class="absolute bottom-5 right-5 md:right-10 flex items-center gap-2 opacity-50 hover:opacity-100 transition duration-300 dyn-text-bottom-h focus:outline-none z-40 group">
+                <span data-i18n="back_to_top" class="font-medium text-[9px] lowercase tracking-widest group-hover:-translate-y-0.5 transition-transform">kembali ke atas</span>
+                <svg class="w-3 h-3 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
             </a>
         </div>
     </div>
@@ -370,36 +384,39 @@
         const translations = {
             id: {
                 title: "DESTI'S<br>JOURNEY",
-                meta: "Perjalanan 7 Hari Study Trip di Jepang: Cerita dan Pengalaman",
+                meta: "Perjalanan 7 Hari Study Trip di Jepang:<br>Cerita dan Pengalaman",
                 poster_title: "Desti Puspita", author: "Penulis: Desti Puspita",
                 locations: "Lokasi : Universitas Tokyo, Shibuya, Asakusa, Homestay Lokal",
                 synopsis: "Nama pemenang lomba disebut, dan itu namaku. Perjalanan tujuh hari ini merombak total cara pandangku tentang usaha dan kedisiplinan.",
                 gallery_title: "Galeri", quote_text: '"Kadang Tuhan tidak menunggu kita sempurna dulu, Dia cuma menunggu kita mau melangkah."',
                 bottom_bar_title: "日本の旅 | Jurnal Lengkap Desti", back_to_top: "kembali ke atas",
                 ch1_title: "Universitas Tokyo", ch2_title: "Keluarga Baru", ch3_title: "Tiga Pelajaran Utama", ch4_title: "Sebuah Refleksi Akhir",
-                footer: "Akhir dari Perjalanan"
+                footer: "Akhir dari Perjalanan",
+                tag_1: "Dokumenter", tag_2: "Self-Growth", tag_3: "True Story"
             },
             en: {
                 title: "DESTI'S<br>JOURNEY",
-                meta: "7-Day Study Trip in Japan: Stories and Experiences",
+                meta: "7-Day Study Trip in Japan:<br>Stories and Experiences",
                 poster_title: "Desti Puspita", author: "Author: Desti Puspita",
                 locations: "Locations : Tokyo University, Shibuya, Asakusa, Local Homestay",
                 synopsis: "The winner's name was announced, and it was mine. This seven-day journey completely transformed my perspective on effort and discipline.",
                 gallery_title: "Gallery", quote_text: '"Sometimes God does not wait for us to be perfect; He just waits for us to be willing to take a step."',
                 bottom_bar_title: "日本の旅 | Desti's Expanded Journal", back_to_top: "back to top",
                 ch1_title: "The University of Tokyo", ch2_title: "A New Family", ch3_title: "Three Core Lessons", ch4_title: "A Final Reflection",
-                footer: "End of the Journey"
+                footer: "End of the Journey",
+                tag_1: "Documentary", tag_2: "Self-Growth", tag_3: "True Story"
             },
             jp: {
                 title: "DESTI'S<br>JOURNEY",
-                meta: "日本での7日間のスタディトリップ：物語と経験",
+                meta: "日本での7日間のスタディトリップ：<br>物語と経験",
                 poster_title: "デスティ・プスピタ", author: "著者: デスティ・プスピタ",
                 locations: "場所 : 東京大学、渋谷、浅草、地元のホームステイ",
                 synopsis: "優勝者の名前が発表され、それは私の名前でした。この桜の国での7日間の旅は、私の考え方をゆっくりと完全に変えました。",
                 gallery_title: "ギャラリー", quote_text: '「神様は私たちが完璧になるのを待つのではなく、ただ私たちが一歩を踏み出すのを待っている時があります。」',
                 bottom_bar_title: "日本の旅 | デスティの詳細な日記", back_to_top: "トップへ戻る",
                 ch1_title: "東京大学", ch2_title: "新しい家族", ch3_title: "3つの重要な教訓", ch4_title: "最後の考察",
-                footer: "旅の終わり"
+                footer: "旅 of the 終わり",
+                tag_1: "ドキュメンタリー", tag_2: "自己成長", tag_3: "実話"
             }
         };
 
@@ -428,7 +445,7 @@
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[lang][key]) {
-                    if (key === 'title') typeWriter(el, translations[lang][key], 150);
+                    if (key === 'title') typeWriter(el, translations[lang][key], 120);
                     else el.innerHTML = translations[lang][key];
                 }
             });
