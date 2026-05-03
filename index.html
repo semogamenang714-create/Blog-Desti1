@@ -11,31 +11,37 @@
     <style>
         /* CSS Variables for Theming */
         :root {
-            --bg-main: #1a3861;
-            --bg-secondary: #112541;
-            --bg-card: #1e3f6e;
-            --bg-bottom: #f8f9fa;
-            --text-main: #ffffff;
-            --text-muted: #93c5fd; /* blue-300 */
-            --text-dark: #1a3861;
-            --text-dark-muted: #4b5563; /* gray-600 */
-            --border-color: rgba(255, 255, 255, 0.1);
-            --border-bottom: #d1d5db;
-            --btn-hover: rgba(255, 255, 255, 0.1);
+            /* Tema Terang (Putih, Pink Pastel, Merah Pastel) */
+            --bg-main: #FFFFFF; /* Putih */
+            --bg-secondary: #FFD1DC; /* Pink Pastel */
+            --bg-card: #FFF5F7; /* Putih dengan sedikit rona pink */
+            --bg-bottom: #FAECEE; /* Pastel lembut yang sangat nyaman di mata */
+            
+            --text-main: #4A4A4A; 
+            --text-muted: #718096; 
+            --text-dark: #2D3748; 
+            --text-dark-muted: #4A5568; 
+            
+            --border-color: rgba(255, 182, 185, 0.4); /* Merah pastel transparan */
+            --border-bottom: rgba(255, 182, 185, 0.4);
+            --btn-hover: rgba(255, 209, 220, 0.5); /* Pink pastel transparan */
         }
 
-        [data-theme="light"] {
-            --bg-main: #e0f2fe; /* sky-100 */
-            --bg-secondary: #bae6fd; /* sky-200 */
-            --bg-card: #f0f9ff; /* sky-50 */
-            --bg-bottom: #ffffff;
-            --text-main: #0f172a; /* slate-900 */
-            --text-muted: #334155; /* slate-700 */
-            --text-dark: #0f172a;
-            --text-dark-muted: #475569; /* slate-600 */
-            --border-color: rgba(0, 0, 0, 0.1);
-            --border-bottom: #e2e8f0;
-            --btn-hover: rgba(0, 0, 0, 0.05);
+        [data-theme="dark"] {
+            /* Tema Gelap (Biru Tua Pastel, Biru Pastel, Ungu Pastel) */
+            --bg-main: #2A365C; /* Biru Tua Pastel */
+            --bg-secondary: #8DA9C4; /* Biru Pastel */
+            --bg-card: #3D4A73; /* Biru Tua (Sedikit lebih terang) */
+            --bg-bottom: #354266; /* Biru gelap muted agar menyatu dan tidak sakit mata */
+            
+            --text-main: #FDFBF7;
+            --text-muted: #E2E8F0;
+            --text-dark: #FDFBF7;
+            --text-dark-muted: #E2E8F0;
+            
+            --border-color: rgba(141, 169, 196, 0.3); /* Biru pastel transparan */
+            --border-bottom: rgba(141, 169, 196, 0.3);
+            --btn-hover: rgba(141, 169, 196, 0.3);
         }
 
         body {
@@ -54,8 +60,8 @@
         /* Custom scrollbar */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-secondary); }
-        ::-webkit-scrollbar-thumb { background: #3b6399; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #4a7ab5; }
+        ::-webkit-scrollbar-thumb { background: var(--bg-bottom); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { opacity: 0.8; }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -96,35 +102,98 @@
             0% { opacity: 0; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
         }
+
+        /* Dropdown Animation */
+        #mobile-menu, #lang-dropdown {
+            transform-origin: top;
+            transition: all 0.2s ease-out;
+        }
+        .menu-open {
+            animation: slideDown 0.2s ease forwards;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: scaleY(0.95) translateY(-5px); }
+            to { opacity: 1; transform: scaleY(1) translateY(0); }
+        }
+
+        /* Typing Cursor Animation */
+        .typing-cursor {
+            display: inline-block;
+            width: 4px;
+            height: 1em;
+            background-color: currentColor;
+            margin-left: 4px;
+            vertical-align: text-bottom;
+            animation: blink 0.8s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
     </style>
 </head>
 <body class="dyn-bg dyn-text">
 
     <!-- Navigation Bar (Floating) -->
-    <nav class="fixed top-0 w-full z-50 bg-black/20 backdrop-blur-md border-b border-white/10 transition-all duration-300">
+    <nav class="fixed top-0 w-full z-50 bg-[var(--bg-main)]/80 backdrop-blur-md border-b dyn-border-bottom transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Left Nav: Links -->
-                <div class="flex gap-4">
-                    <a href="#profile" class="text-white text-xs md:text-sm font-semibold uppercase tracking-wider hover:text-yellow-400 transition">Profile</a>
-                    <a href="#gallery" class="text-white text-xs md:text-sm font-semibold uppercase tracking-wider hover:text-yellow-400 transition">Gallery</a>
-                    <a href="#story" class="text-white text-xs md:text-sm font-semibold uppercase tracking-wider hover:text-yellow-400 transition">Story</a>
+                <!-- Left Nav: Brand/Logo -->
+                <div class="font-poppins font-bold tracking-widest dyn-text-dark text-lg md:text-xl">
+                    JOURNEY
                 </div>
-                
-                <!-- Right Nav: Controls -->
-                <div class="flex items-center gap-4">
-                    <!-- Theme Toggle -->
-                    <button id="theme-toggle" onclick="toggleTheme()" class="text-white hover:text-yellow-400 transition focus:outline-none" title="Toggle Light/Dark Mode">
-                        <!-- Moon Icon Default -->
-                        <svg id="theme-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    </button>
-                    <!-- Language Selector -->
-                    <div class="flex bg-black/40 rounded-full overflow-hidden border border-white/20">
-                        <button onclick="setLang('id')" id="btn-lang-id" class="px-3 py-1 text-xs font-bold text-white bg-white/20 transition">ID</button>
-                        <button onclick="setLang('en')" id="btn-lang-en" class="px-3 py-1 text-xs font-bold text-white hover:bg-white/20 transition">EN</button>
-                        <button onclick="setLang('jp')" id="btn-lang-jp" class="px-3 py-1 text-xs font-bold text-white hover:bg-white/20 transition">JP</button>
+
+                <!-- Center/Right Nav: Links & Controls -->
+                <div class="flex items-center gap-4 sm:gap-6">
+                    
+                    <!-- Desktop Links (Hidden on Mobile) -->
+                    <div class="hidden md:flex items-center gap-6 mr-4">
+                        <a href="#profile" class="dyn-text-dark text-sm font-semibold uppercase tracking-wider hover:opacity-60 transition">Profile</a>
+                        <a href="#gallery" class="dyn-text-dark text-sm font-semibold uppercase tracking-wider hover:opacity-60 transition">Gallery</a>
+                        <a href="#story" class="dyn-text-dark text-sm font-semibold uppercase tracking-wider hover:opacity-60 transition">Story</a>
                     </div>
+                    
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" onclick="toggleTheme()" class="dyn-text-dark hover:opacity-60 transition focus:outline-none p-1" title="Toggle Light/Dark Mode">
+                        <!-- Moon Icon Default -->
+                        <svg id="theme-icon" class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+
+                    <!-- Language Dropdown -->
+                    <div class="relative inline-block text-left">
+                        <button id="lang-menu-btn" onclick="toggleLangDropdown()" class="flex items-center gap-1 dyn-text-dark font-bold text-xs md:text-sm uppercase px-3 py-1.5 md:px-4 md:py-2 rounded-full border dyn-border dyn-hover transition focus:outline-none">
+                            <span id="current-lang-label">ID</span>
+                            <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        
+                        <!-- Lang Dropdown Content -->
+                        <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-24 rounded-xl shadow-lg bg-[var(--bg-card)] ring-1 ring-black ring-opacity-5 focus:outline-none z-50 border dyn-border overflow-hidden">
+                            <div class="py-1">
+                                <button onclick="setLang('id')" class="block w-full text-left px-4 py-2.5 text-xs font-bold dyn-text-dark dyn-hover transition">ID - Indo</button>
+                                <button onclick="setLang('en')" class="block w-full text-left px-4 py-2.5 text-xs font-bold dyn-text-dark dyn-hover transition">EN - Eng</button>
+                                <button onclick="setLang('jp')" class="block w-full text-left px-4 py-2.5 text-xs font-bold dyn-text-dark dyn-hover transition">JP - Jpn</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile: 3-Dot Button -->
+                    <button id="hamburger-btn" onclick="toggleMenu()" class="md:hidden dyn-text-dark focus:outline-none p-1 hover:opacity-60 transition ml-1">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <circle cx="12" cy="5" r="2.5" />
+                            <circle cx="12" cy="12" r="2.5" />
+                            <circle cx="12" cy="19" r="2.5" />
+                        </svg>
+                    </button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu (Sections) -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 w-full bg-[var(--bg-card)] border-b dyn-border-bottom shadow-lg">
+            <div class="px-4 py-3 space-y-2">
+                <a href="#profile" onclick="toggleMenu()" class="block px-4 py-3 dyn-text-dark text-sm font-semibold uppercase tracking-wider dyn-hover rounded-lg transition">Profile</a>
+                <a href="#gallery" onclick="toggleMenu()" class="block px-4 py-3 dyn-text-dark text-sm font-semibold uppercase tracking-wider dyn-hover rounded-lg transition">Gallery</a>
+                <a href="#story" onclick="toggleMenu()" class="block px-4 py-3 dyn-text-dark text-sm font-semibold uppercase tracking-wider dyn-hover rounded-lg transition">Story</a>
             </div>
         </div>
     </nav>
@@ -137,12 +206,12 @@
              class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay">
         
         <!-- Gradient Overlay to blend with background -->
-        <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-main)] via-transparent to-transparent opacity-90 transition-colors duration-500"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-main)] via-[var(--bg-main)]/50 to-transparent opacity-95 transition-colors duration-500"></div>
     </div>
 
     <!-- 2. Title & Meta Section -->
-    <div id="profile" class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 -mt-24 md:-mt-40 mb-10 pt-16 hero-fade-in">
-        <h1 data-i18n="title" class="font-poppins font-black text-4xl md:text-5xl lg:text-6xl tracking-tight dyn-text mb-2 drop-shadow-lg">
+    <div id="profile" class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 -mt-32 md:-mt-48 mb-10 pt-10 hero-fade-in">
+        <h1 data-i18n="title" class="font-poppins font-black text-4xl md:text-5xl lg:text-6xl tracking-tight dyn-text mb-2 drop-shadow-sm">
             DESTI'S<br>JOURNEY
         </h1>
         <p data-i18n="meta" class="text-sm md:text-base font-medium dyn-text-muted tracking-wide">
@@ -157,9 +226,9 @@
         <div class="w-32 md:w-48 shrink-0">
             <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
                  alt="Poster" 
-                 class="w-full h-auto rounded-lg shadow-[0_15px_30px_rgba(0,0,0,0.4)] border dyn-border transition-colors">
-            <div data-i18n="poster_title" class="text-center mt-3 font-poppins font-bold text-xl tracking-wider dyn-text">
-                DESTI
+                 class="w-full h-auto rounded-xl shadow-lg border-4 dyn-border transition-colors">
+            <div data-i18n="poster_title" class="text-center mt-3 font-poppins font-bold text-lg tracking-wider dyn-text">
+                Desti Puspita
             </div>
         </div>
 
@@ -168,15 +237,15 @@
             <h3 data-i18n="author" class="font-bold dyn-text text-lg tracking-wide mb-1">Author: Desti</h3>
             <p data-i18n="locations" class="text-sm dyn-text-muted font-medium mb-4">Locations : Tokyo University, Shibuya, Asakusa, Local Homestay</p>
             
-            <p data-i18n="synopsis" class="text-sm md:text-base leading-relaxed mb-6 max-w-3xl dyn-text opacity-90 font-light">
+            <p data-i18n="synopsis" class="text-sm md:text-base leading-relaxed mb-6 max-w-3xl dyn-text opacity-90 font-light text-justify">
                 Nama pemenang lomba disebut, dan itu namaku. Dari semua kemungkinan yang kubayangkan, ini yang paling tidak terduga: aku terbang ke Jepang. Awalnya aku merasa tidak percaya diri dan mengira keberhasilanku hanyalah kebetulan semata. Namun, perjalanan tujuh hari di negeri sakura ini perlahan merombak total cara pandangku tentang usaha, kedisiplinan, dan menemukan validasi dari dalam diri sendiri, bukan dari pengakuan orang lain.
             </p>
             
             <!-- Tags (Genre style) -->
             <div class="flex flex-wrap gap-3">
-                <button data-i18n="tag_1" class="border dyn-border rounded-full px-5 py-1.5 text-xs font-medium tracking-wide hover:bg-white/10 hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none">Documentary</button>
-                <button data-i18n="tag_2" class="border dyn-border rounded-full px-5 py-1.5 text-xs font-medium tracking-wide hover:bg-white/10 hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none">Personal Growth</button>
-                <button data-i18n="tag_3" class="border dyn-border rounded-full px-5 py-1.5 text-xs font-medium tracking-wide hover:bg-white/10 hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none">Slice of Life</button>
+                <button data-i18n="tag_1" class="border dyn-border bg-[var(--bg-card)] rounded-full px-5 py-1.5 text-xs font-semibold tracking-wide dyn-hover hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none shadow-sm">Documentary</button>
+                <button data-i18n="tag_2" class="border dyn-border bg-[var(--bg-card)] rounded-full px-5 py-1.5 text-xs font-semibold tracking-wide dyn-hover hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none shadow-sm">Personal Growth</button>
+                <button data-i18n="tag_3" class="border dyn-border bg-[var(--bg-card)] rounded-full px-5 py-1.5 text-xs font-semibold tracking-wide dyn-hover hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none shadow-sm">Slice of Life</button>
             </div>
         </div>
     </div>
@@ -187,13 +256,13 @@
             <div class="w-10 hidden md:block"></div> <!-- spacer -->
             <div>
                 <h4 data-i18n="gallery_title" class="font-poppins font-bold text-sm tracking-[0.3em] uppercase dyn-text mb-2">Gallery</h4>
-                <svg class="w-4 h-4 mx-auto dyn-text opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <div class="w-16 h-1 bg-[var(--bg-secondary)] mx-auto rounded-full"></div>
             </div>
             <div class="mt-4 md:mt-0 flex gap-2">
-                <button onclick="scrollCarousel(-1)" class="w-10 h-10 rounded-full dyn-bg-card dyn-border border flex items-center justify-center dyn-hover dyn-text transition shadow-md focus:outline-none">
+                <button onclick="scrollCarousel(-1)" class="w-10 h-10 rounded-full dyn-bg-card dyn-border border flex items-center justify-center dyn-hover dyn-text transition shadow-sm focus:outline-none">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                 </button>
-                <button onclick="scrollCarousel(1)" class="w-10 h-10 rounded-full dyn-bg-card dyn-border border flex items-center justify-center dyn-hover dyn-text transition shadow-md focus:outline-none">
+                <button onclick="scrollCarousel(1)" class="w-10 h-10 rounded-full dyn-bg-card dyn-border border flex items-center justify-center dyn-hover dyn-text transition shadow-sm focus:outline-none">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                 </button>
             </div>
@@ -201,36 +270,36 @@
 
         <!-- Scrollable Carousel Container -->
         <div class="max-w-[1400px] mx-auto px-4 relative mb-20">
-            <div id="carousel-container" class="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-6 scroll-smooth">
+            <div id="carousel-container" class="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-6 scroll-smooth pt-4">
                 
-                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-xl border dyn-border shadow-lg">
+                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
                     <img src="https://images.unsplash.com/photo-1542051812899-25bb1c10777e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Shibuya">
-                    <div class="absolute bottom-4 left-4 bg-black/60 px-3 py-1 rounded text-white text-xs font-bold tracking-wider">SHIBUYA</div>
+                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm">SHIBUYA</div>
                 </div>
                 
-                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-xl border dyn-border shadow-lg">
+                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
                     <img src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Asakusa">
-                    <div class="absolute bottom-4 left-4 bg-black/60 px-3 py-1 rounded text-white text-xs font-bold tracking-wider">ASAKUSA</div>
+                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm">ASAKUSA</div>
                 </div>
                 
-                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-xl border dyn-border shadow-lg">
+                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
                     <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Tokyo Uni">
-                    <div class="absolute bottom-4 left-4 bg-black/60 px-3 py-1 rounded text-white text-xs font-bold tracking-wider">TOKYO UNIVERSITY</div>
+                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm">TOKYO UNIVERSITY</div>
                 </div>
                 
-                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-xl border dyn-border shadow-lg">
+                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
                     <img src="https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Nature">
-                    <div class="absolute bottom-4 left-4 bg-black/60 px-3 py-1 rounded text-white text-xs font-bold tracking-wider">UENO PARK</div>
+                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm">UENO PARK</div>
                 </div>
                 
-                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-xl border dyn-border shadow-lg">
+                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
                     <img src="https://images.unsplash.com/photo-1528360354687-839420409a6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Homestay Food">
-                    <div class="absolute bottom-4 left-4 bg-black/60 px-3 py-1 rounded text-white text-xs font-bold tracking-wider">HOMESTAY MEALS</div>
+                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm">HOMESTAY MEALS</div>
                 </div>
 
-                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-xl border dyn-border shadow-lg">
+                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
                     <img src="https://images.unsplash.com/photo-1480796927426-f609979314bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Tokyo Streets">
-                    <div class="absolute bottom-4 left-4 bg-black/60 px-3 py-1 rounded text-white text-xs font-bold tracking-wider">TOKYO STREETS</div>
+                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm">TOKYO STREETS</div>
                 </div>
 
             </div>
@@ -239,13 +308,13 @@
 
     <!-- 5. Centered Quote -->
     <div class="text-center px-6 mb-20 max-w-4xl mx-auto reveal">
-        <p data-i18n="quote_text" class="font-quote italic font-normal text-lg md:text-xl dyn-text tracking-wide leading-relaxed opacity-75">
+        <p data-i18n="quote_text" class="font-quote italic font-normal text-lg md:text-xl dyn-text tracking-wide leading-relaxed opacity-80">
             "Kadang Tuhan tidak menunggu kita sempurna dulu, Dia cuma menunggu kita mau melangkah."
         </p>
     </div>
 
     <!-- 6. Bottom Story Section (Expanded Content) -->
-    <div id="story" class="dyn-bg-bottom w-full dyn-text-dark transition-colors duration-500 pt-8 reveal">
+    <div id="story" class="dyn-bg-bottom w-full dyn-text-dark transition-colors duration-500 pt-8 reveal shadow-inner">
         
         <!-- Divider Bar -->
         <div class="w-full dyn-border-bottom border-b py-4 px-6 md:px-10 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -254,7 +323,7 @@
             </div>
             <div class="flex items-center gap-4 text-gray-500">
                 <!-- Anchor back to top -->
-                <a href="#profile" class="flex items-center gap-2 hover:text-[#1a3861] transition">
+                <a href="#profile" class="flex items-center gap-2 hover:opacity-70 dyn-text-dark transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
                     <span data-i18n="back_to_top" class="text-xs font-bold uppercase tracking-wider">Back to Top</span>
                 </a>
@@ -265,32 +334,44 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 dyn-border-bottom border-b">
             
             <!-- Chapter 1: Tokyo Uni -->
-            <div class="p-8 dyn-border-bottom border-r border-b lg:border-b-0 hover:bg-black/5 transition cursor-default group reveal">
-                <h5 data-i18n="ch1_title" class="font-poppins font-bold text-xl dyn-text-dark mb-4 group-hover:text-yellow-600 transition">Universitas Tokyo</h5>
+            <div class="p-8 dyn-border-bottom border-r border-b lg:border-b-0 dyn-hover transition cursor-default group reveal">
+                <div class="overflow-hidden rounded-xl mb-5 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Tokyo University" class="w-full aspect-video object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <h5 data-i18n="ch1_title" class="font-poppins font-bold text-xl dyn-text-dark mb-4 transition">Universitas Tokyo</h5>
                 <p data-i18n="ch1_text" class="text-sm dyn-text-dark-muted leading-loose text-justify">
                     Selama 5 hari aku belajar di lingkungan akademik bergengsi ini. Pengalaman ini bukan semata-mata tentang seberapa sulit kurikulum yang diberikan, melainkan tentang mengobservasi cara mereka berpikir secara kritis. Kedisiplinan mahasiswa di kelas berada di level yang benar-benar berbeda; waktu sangat dihargai dan etos kerja terlihat dari hal-hal kecil. Di aula kampus yang megah itu, aku menyadari bahwa dunia ini sangat luas dan aku masih memiliki banyak ruang kosong yang harus diisi untuk terus bertumbuh.
                 </p>
             </div>
 
             <!-- Chapter 2: Homestay -->
-            <div class="p-8 dyn-border-bottom border-r border-b lg:border-b-0 hover:bg-black/5 transition cursor-default group reveal">
-                <h5 data-i18n="ch2_title" class="font-poppins font-bold text-xl dyn-text-dark mb-4 group-hover:text-yellow-600 transition">Keluarga Baru</h5>
+            <div class="p-8 dyn-border-bottom border-r border-b lg:border-b-0 dyn-hover transition cursor-default group reveal">
+                <div class="overflow-hidden rounded-xl mb-5 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1528360354687-839420409a6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Homestay" class="w-full aspect-video object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <h5 data-i18n="ch2_title" class="font-poppins font-bold text-xl dyn-text-dark mb-4 transition">Keluarga Baru</h5>
                 <p data-i18n="ch2_text" class="text-sm dyn-text-dark-muted leading-loose text-justify">
                     Tinggal bersama keluarga asli Jepang selama 7 hari bukan sekadar mencari tempat menumpang tidur, melainkan sebuah pertukaran kehidupan. Awalnya terasa canggung karena keterbatasan bahasa; aku sering salah ucap dan mengandalkan bahasa tubuh. Namun, di meja makan yang hangat sambil menyantap masakan rumahan, aku belajar bahasa Jepang jauh lebih cepat dari buku teks mana pun. Keluarga ini menerima kekuranganku dengan senyum tulus yang meruntuhkan segala kecemasanku.
                 </p>
             </div>
 
             <!-- Chapter 3: Culture -->
-            <div class="p-8 dyn-border-bottom border-r border-b lg:border-b-0 hover:bg-black/5 transition cursor-default group reveal">
-                <h5 data-i18n="ch3_title" class="font-poppins font-bold text-xl dyn-text-dark mb-4 group-hover:text-yellow-600 transition">Tiga Pelajaran Utama</h5>
+            <div class="p-8 dyn-border-bottom border-r border-b lg:border-b-0 dyn-hover transition cursor-default group reveal">
+                <div class="overflow-hidden rounded-xl mb-5 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Culture" class="w-full aspect-video object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <h5 data-i18n="ch3_title" class="font-poppins font-bold text-xl dyn-text-dark mb-4 transition">Tiga Pelajaran Utama</h5>
                 <p data-i18n="ch3_text" class="text-sm dyn-text-dark-muted leading-loose text-justify">
                     Menginjakkan kaki di fasilitas umum Tokyo memberikan tiga pukulan realita. Pertama, disiplin yang sudah menjadi insting alami, bukan paksaan aturan. Kedua, kebersihan ekstrem yang dipertahankan karena rasa hormat pada orang lain yang akan menggunakan fasilitas yang sama. Ketiga, keramahan yang tetap hangat meski aku adalah orang asing yang sering tersesat di stasiun kereta. Melihat harmoni sosial ini memunculkan pertanyaan di benakku: jika mereka bisa menjadikan kebaikan sebagai kebiasaan sehari-hari, mengapa aku tidak bisa memulainya sekarang?
                 </p>
             </div>
 
             <!-- Chapter 4: Conclusion -->
-            <div class="p-8 hover:bg-black/5 transition cursor-default group reveal">
-                <h5 data-i18n="ch4_title" class="font-poppins font-bold text-xl dyn-text-dark mb-4 group-hover:text-yellow-600 transition">Sebuah Refleksi Akhir</h5>
+            <div class="p-8 dyn-hover transition cursor-default group reveal">
+                <div class="overflow-hidden rounded-xl mb-5 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1542051812899-25bb1c10777e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Journey" class="w-full aspect-video object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <h5 data-i18n="ch4_title" class="font-poppins font-bold text-xl dyn-text-dark mb-4 transition">Sebuah Refleksi Akhir</h5>
                 <p data-i18n="ch4_text" class="text-sm dyn-text-dark-muted leading-loose text-justify">
                     Perjalanan tak terduga ini akhirnya mengajarkanku sesuatu yang lebih dari sekadar mengagumi keindahan budaya asing. Ini adalah perjalanan menembus keraguanku sendiri. Aku belajar bahwa aku tidak perlu menunggu pengakuan manusia untuk merasa berharga. Ada banyak momen sepi saat aku berjalan menelusuri trotoar Tokyo, namun di sana aku merasa didampingi oleh keyakinan yang baru. Saat tak ada seorang pun yang melihat usahamu, bukan berarti jalanmu sia-sia. Percayalah, kau tidak pernah melangkah sendirian.
                 </p>
@@ -299,27 +380,26 @@
         </div>
         
         <!-- Bottom Footer margin -->
-        <div class="py-10 text-center dyn-bg-bottom border-t border-gray-200/50 transition-colors reveal">
-            <p data-i18n="footer" class="text-xs text-gray-400 uppercase tracking-[0.4em] font-bold">End of the Journey</p>
+        <div class="py-10 text-center dyn-bg-bottom border-t dyn-border-bottom transition-colors reveal">
+            <p data-i18n="footer" class="text-xs dyn-text-dark-muted uppercase tracking-[0.4em] font-bold">End of the Journey</p>
         </div>
 
     </div>
 
-    <!-- JavaScript Logic: Translation, Theming, Carousel, Scroll Reveal -->
+    <!-- JavaScript Logic: Translation, Theming, Dropdown, Carousel, Scroll Reveal -->
     <script>
         // --- 1. Language Translation Dictionary ---
         const translations = {
             id: {
                 title: "DESTI'S<br>JOURNEY",
                 meta: "2026 | 7 Hari | Bahasa : ID, EN, JP",
-                poster_title: "DESTI",
-                author: "Penulis: Desti",
+                poster_title: "Desti Puspita",
+                author: "Penulis: Desti Puspita",
                 locations: "Lokasi : Universitas Tokyo, Shibuya, Asakusa, Homestay Lokal",
                 synopsis: "Nama pemenang lomba disebut, dan itu namaku. Dari semua kemungkinan yang kubayangkan, ini yang paling tidak terduga: aku terbang ke Jepang. Awalnya aku merasa tidak percaya diri dan mengira keberhasilanku hanyalah kebetulan semata. Namun, perjalanan tujuh hari di negeri sakura ini perlahan merombak total cara pandangku tentang usaha, kedisiplinan, dan menemukan validasi dari dalam diri sendiri, bukan dari pengakuan orang lain.",
                 tag_1: "Dokumenter",
                 tag_2: "Pengembangan Diri",
                 tag_3: "Kisah Nyata",
-                rating_text: "Mengubah Hidup",
                 gallery_title: "Galeri",
                 quote_text: '"Kadang Tuhan tidak menunggu kita sempurna dulu, Dia cuma menunggu kita mau melangkah."',
                 bottom_bar_title: "日本の旅 | Jurnal Lengkap Desti",
@@ -337,14 +417,13 @@
             en: {
                 title: "DESTI'S<br>JOURNEY",
                 meta: "2026 | 7 Days | Language : ID, EN, JP",
-                poster_title: "DESTI",
-                author: "Author: Desti",
+                poster_title: "Desti Puspita",
+                author: "Author: Desti Puspita",
                 locations: "Locations : Tokyo University, Shibuya, Asakusa, Local Homestay",
                 synopsis: "The winner's name was announced, and it was mine. Of all the possibilities I imagined, this was the most unexpected: flying to Japan. Initially, I felt insecure and thought my success was mere coincidence. However, this seven-day journey in the land of cherry blossoms slowly completely transformed my perspective on effort, discipline, and finding validation from within, rather than from the acknowledgment of others.",
                 tag_1: "Documentary",
                 tag_2: "Personal Growth",
                 tag_3: "Slice of Life",
-                rating_text: "Life Changing",
                 gallery_title: "Gallery",
                 quote_text: '"Sometimes God does not wait for us to be perfect; He just waits for us to be willing to take a step."',
                 bottom_bar_title: "日本の旅 | Desti's Expanded Journal",
@@ -362,14 +441,13 @@
             jp: {
                 title: "DESTI'S<br>JOURNEY",
                 meta: "2026年 | 7日間 | 言語 : ID, EN, JP",
-                poster_title: "デスティ",
-                author: "著者: デスティ",
+                poster_title: "デスティ・プスピタ",
+                author: "著者: デスティ・プスピタ",
                 locations: "場所 : 東京大学、渋谷、浅草、地元のホームステイ",
                 synopsis: "優勝者の名前が発表され、それは私の名前でした。想像していたすべての可能性の中で、日本へ飛ぶことは最も予想外のことでした。当初、私は自信がなく、自分の成功は単なる偶然だと思っていました。しかし、この桜の国での7日間の旅は、努力、規律、そして他人の承認からではなく内面から自己肯定感を見出すことへの私の考え方をゆっくりと完全に変えました。",
                 tag_1: "ドキュメンタリー",
                 tag_2: "自己成長",
                 tag_3: "日常の風景",
-                rating_text: "人生を変える",
                 gallery_title: "ギャラリー",
                 quote_text: '「神様は私たちが完璧になるのを待つのではなく、ただ私たちが一歩を踏み出すのを待っている時があります。」',
                 bottom_bar_title: "日本の旅 | デスティの詳細な日記",
@@ -387,55 +465,117 @@
         };
 
         let currentLang = 'id';
+        let typingTimer;
+
+        function typeWriter(element, text, speed) {
+            clearInterval(typingTimer);
+            let i = 0;
+            let currentHTML = '';
+            element.innerHTML = '<span class="typing-cursor"></span>';
+            
+            typingTimer = setInterval(() => {
+                if (i < text.length) {
+                    // Pengecekan khusus untuk tag <br> agar dilewati dan tidak tercetak sebagai teks
+                    if (text.substring(i, i + 4) === '<br>') {
+                        currentHTML += '<br>';
+                        i += 4;
+                    } else {
+                        currentHTML += text.charAt(i);
+                        i++;
+                    }
+                    element.innerHTML = currentHTML + '<span class="typing-cursor"></span>';
+                } else {
+                    clearInterval(typingTimer);
+                    // Hapus kursor setelah animasi mengetik selesai
+                    element.innerHTML = currentHTML;
+                }
+            }, speed);
+        }
 
         function setLang(lang) {
             currentLang = lang;
             
-            // Update button styles
-            ['id', 'en', 'jp'].forEach(l => {
-                const btn = document.getElementById(`btn-lang-${l}`);
-                if(l === lang) {
-                    btn.classList.add('bg-white/20');
-                    btn.classList.remove('hover:bg-white/20');
-                } else {
-                    btn.classList.remove('bg-white/20');
-                    btn.classList.add('hover:bg-white/20');
-                }
-            });
+            // Set label on dropdown button
+            document.getElementById('current-lang-label').innerText = lang.toUpperCase();
 
             // Update texts
             const elements = document.querySelectorAll('[data-i18n]');
             elements.forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[lang][key]) {
-                    el.innerHTML = translations[lang][key];
+                    if (key === 'title') {
+                        // Jalankan efek animasi ketik huruf SATU PER SATU (kecepatan diperlambat jadi 150ms)
+                        typeWriter(el, translations[lang][key], 150);
+                    } else {
+                        el.innerHTML = translations[lang][key];
+                    }
                 }
             });
+
+            // Close dropdown after selection
+            document.getElementById('lang-dropdown').classList.add('hidden');
         }
 
-        // --- 2. Theme Toggle Logic (Light / Dark Mode) ---
-        let isDarkMode = true; // Default Ghibli theme is dark
+        // --- 2. Theme Toggle Logic (Light / Dark Pastel) ---
+        let isDarkMode = false; // Default is Light Pastel
         
         function toggleTheme() {
             const body = document.body;
-            const icon = document.getElementById('theme-icon');
+            const iconDesktop = document.getElementById('theme-icon');
             
             isDarkMode = !isDarkMode;
             
-            if (!isDarkMode) {
-                // Switch to Light Mode
-                body.setAttribute('data-theme', 'light');
-                // Change icon to Sun
-                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>`;
+            const moonIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>`;
+            const sunIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>`;
+
+            if (isDarkMode) {
+                // Switch to Dark Pastel
+                body.setAttribute('data-theme', 'dark');
+                if(iconDesktop) iconDesktop.innerHTML = sunIcon;
             } else {
-                // Switch to Dark Mode
+                // Switch to Light Pastel
                 body.removeAttribute('data-theme');
-                // Change icon to Moon
-                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>`;
+                if(iconDesktop) iconDesktop.innerHTML = moonIcon;
             }
         }
 
-        // --- 3. Interactive Carousel Logic ---
+        // --- 3. Language Dropdown Toggle ---
+        function toggleLangDropdown() {
+            const dropdown = document.getElementById('lang-dropdown');
+            if (dropdown.classList.contains('hidden')) {
+                dropdown.classList.remove('hidden');
+                dropdown.classList.add('menu-open');
+            } else {
+                dropdown.classList.add('hidden');
+                dropdown.classList.remove('menu-open');
+            }
+        }
+
+        // --- 4. Mobile Menu (Hamburger) Toggle ---
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                menu.classList.add('menu-open');
+            } else {
+                menu.classList.add('hidden');
+                menu.classList.remove('menu-open');
+            }
+        }
+
+        // Close dropdowns if clicked outside
+        window.addEventListener('click', function(e) {
+            // Lang dropdown
+            if (!document.getElementById('lang-dropdown').contains(e.target) && !e.target.closest('#lang-menu-btn')) {
+                document.getElementById('lang-dropdown').classList.add('hidden');
+            }
+            // Mobile hamburger menu
+            if (!document.getElementById('mobile-menu').contains(e.target) && !e.target.closest('#hamburger-btn')){
+                document.getElementById('mobile-menu').classList.add('hidden');
+            }
+        });
+
+        // --- 5. Interactive Carousel Logic ---
         function scrollCarousel(direction) {
             const container = document.getElementById('carousel-container');
             // Scroll by roughly the width of one item + gap
@@ -443,7 +583,7 @@
             container.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
         }
 
-        // --- 4. Scroll Reveal Logic ---
+        // --- 6. Scroll Reveal Logic ---
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
