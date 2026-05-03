@@ -7,41 +7,57 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital@0;1&family=Poppins:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Playfair+Display:ital@0;1&family=Poppins:wght@500;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* CSS Variables for Theming */
+        /* Variabel CSS untuk Tema */
         :root {
-            /* Tema Terang (Putih, Pink Pastel, Merah Pastel) */
-            --bg-main: #FFFFFF; /* Putih */
-            --bg-secondary: #FFD1DC; /* Pink Pastel */
-            --bg-card: #FFF5F7; /* Putih dengan sedikit rona pink */
-            --bg-bottom: #FAECEE; /* Pastel lembut yang sangat nyaman di mata */
+            /* Tema Terang */
+            --bg-main: #FFFFFF;
+            --bg-secondary: #FFD1DC; 
+            --bg-card: #FFF5F7;
+            --bg-nav: #FFD1DC; 
             
             --text-main: #4A4A4A; 
             --text-muted: #718096; 
             --text-dark: #2D3748; 
             --text-dark-muted: #4A5568; 
             
-            --border-color: rgba(255, 182, 185, 0.4); /* Merah pastel transparan */
+            --border-color: rgba(255, 182, 185, 0.4);
             --border-bottom: rgba(255, 182, 185, 0.4);
-            --btn-hover: rgba(255, 209, 220, 0.5); /* Pink pastel transparan */
+            --btn-hover: rgba(255, 209, 220, 0.5);
+
+            /* Kawasan Jurnal */
+            --bg-bottom: #FAECEE; 
+            --text-bottom-heading: #2D3748;
+            --text-bottom-body: #4A5568;
+            --border-bottom-sec: rgba(255, 182, 185, 0.4);
+            --hover-bottom: rgba(255, 209, 220, 0.4);
+            --accent-bottom: #D53F8C;
         }
 
         [data-theme="dark"] {
-            /* Tema Gelap (Biru Tua Pastel, Biru Pastel, Ungu Pastel) */
-            --bg-main: #2A365C; /* Biru Tua Pastel */
-            --bg-secondary: #8DA9C4; /* Biru Pastel */
-            --bg-card: #3D4A73; /* Biru Tua (Sedikit lebih terang) */
-            --bg-bottom: #354266; /* Biru gelap muted agar menyatu dan tidak sakit mata */
+            /* Tema Gelap */
+            --bg-main: #2A365C; 
+            --bg-secondary: #8DA9C4; 
+            --bg-card: #3D4A73; 
+            --bg-nav: #2A365C; 
             
-            --text-main: #FFFFFF; /* Putih murni agar kontras */
+            --text-main: #FFFFFF; 
             --text-muted: #E2E8F0;
-            --text-dark: #FFFFFF; /* Putih murni agar menonjol di mode gelap */
+            --text-dark: #FFFFFF; 
             --text-dark-muted: #F8FAFC; 
             
-            --border-color: rgba(255, 255, 255, 0.3); /* Putih transparan */
+            --border-color: rgba(255, 255, 255, 0.3); 
             --border-bottom: rgba(255, 255, 255, 0.3);
             --btn-hover: rgba(255, 255, 255, 0.15);
+
+            /* Kawasan Jurnal Mode Gelap */
+            --bg-bottom: #FFFFFF; 
+            --text-bottom-heading: #2A365C; 
+            --text-bottom-body: #475569; 
+            --border-bottom-sec: rgba(155, 136, 237, 0.3); 
+            --hover-bottom: rgba(155, 136, 237, 0.1); 
+            --accent-bottom: #9B88ED; 
         }
 
         body {
@@ -57,36 +73,43 @@
         .font-poppins { font-family: 'Poppins', sans-serif; }
         .font-quote { font-family: 'Playfair Display', serif; }
 
-        /* Custom scrollbar */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-secondary); }
         ::-webkit-scrollbar-thumb { background: var(--bg-bottom); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { opacity: 0.8; }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Dynamic classes utilizing CSS variables */
-        .dyn-bg { background-color: var(--bg-main); }
-        .dyn-bg-sec { background-color: var(--bg-secondary); }
+        /* Global Dynamic Classes */
+        .dyn-bg-nav { background-color: var(--bg-nav); }
         .dyn-bg-card { background-color: var(--bg-card); }
-        .dyn-bg-bottom { background-color: var(--bg-bottom); }
-        .dyn-text { color: var(--text-main); }
-        .dyn-text-muted { color: var(--text-muted); }
+        .dyn-bg-sec { background-color: var(--bg-secondary); }
         .dyn-text-dark { color: var(--text-dark); }
-        .dyn-text-dark-muted { color: var(--text-dark-muted); }
         .dyn-border { border-color: var(--border-color); }
         .dyn-border-bottom { border-color: var(--border-bottom); }
         .dyn-hover:hover { background-color: var(--btn-hover); }
 
-        /* Carousel Hover Zoom */
-        .carousel-img { transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .carousel-item:hover .carousel-img { transform: scale(1.08); }
+        .dyn-bg-bottom { background-color: var(--bg-bottom); }
+        .dyn-text-bottom-h { color: var(--text-bottom-heading); }
+        .dyn-text-bottom-p { color: var(--text-bottom-body); }
+        .dyn-border-bottom-sec { border-color: var(--border-bottom-sec); }
+        .dyn-hover-bottom:hover { background-color: var(--hover-bottom); }
+        .dyn-accent-hover:hover { color: var(--accent-bottom); }
 
-        /* Smooth Reveal Animation on Scroll */
+        .meta-text {
+            font-weight: 200;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        /* Gallery Carousel - Larger Size */
+        .carousel-img { transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .carousel-item:hover .carousel-img { transform: scale(1.1); }
+
+        /* Animation Reveal */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(30px);
             transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
         .reveal.active {
@@ -94,7 +117,6 @@
             transform: translateY(0);
         }
         
-        /* Hero Load Animation */
         .hero-fade-in {
             animation: fadeInTop 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
@@ -103,7 +125,6 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Dropdown Animation */
         #mobile-menu, #lang-dropdown {
             transform-origin: top;
             transition: all 0.2s ease-out;
@@ -116,7 +137,6 @@
             to { opacity: 1; transform: scaleY(1) translateY(0); }
         }
 
-        /* Typing Cursor Animation */
         .typing-cursor {
             display: inline-block;
             width: 4px;
@@ -134,50 +154,42 @@
 </head>
 <body class="dyn-bg dyn-text">
 
-    <!-- Navigation Bar (Floating) -->
-    <nav class="fixed top-0 w-full z-50 bg-[var(--bg-main)]/80 backdrop-blur-md border-b dyn-border-bottom transition-all duration-300">
+    <!-- Navigasi -->
+    <nav class="fixed top-0 w-full z-50 dyn-bg-nav border-b dyn-border-bottom transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Left Nav: Brand/Logo -->
                 <div class="font-poppins font-bold tracking-widest dyn-text-dark text-lg md:text-xl">
                     JOURNEY
                 </div>
 
-                <!-- Center/Right Nav: Links & Controls -->
-                <div class="flex items-center gap-4 sm:gap-6">
-                    
-                    <!-- Desktop Links (Hidden on Mobile) -->
-                    <div class="hidden md:flex items-center gap-6 mr-4">
+                <div class="flex items-center gap-3 sm:gap-8">
+                    <div class="hidden md:flex items-center gap-8 mr-4">
                         <a href="#profile" class="dyn-text-dark text-sm font-semibold uppercase tracking-wider hover:opacity-60 transition">Profile</a>
                         <a href="#gallery" class="dyn-text-dark text-sm font-semibold uppercase tracking-wider hover:opacity-60 transition">Gallery</a>
                         <a href="#story" class="dyn-text-dark text-sm font-semibold uppercase tracking-wider hover:opacity-60 transition">Story</a>
                     </div>
                     
-                    <!-- Theme Toggle -->
-                    <button id="theme-toggle" onclick="toggleTheme()" class="dyn-text-dark hover:opacity-60 transition focus:outline-none p-1" title="Toggle Light/Dark Mode">
-                        <!-- Moon Icon Default -->
+                    <button id="theme-toggle" onclick="toggleTheme()" class="dyn-text-dark hover:opacity-60 transition focus:outline-none p-1">
                         <svg id="theme-icon" class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                     </button>
 
                     <!-- Language Dropdown -->
                     <div class="relative inline-block text-left">
                         <button id="lang-menu-btn" onclick="toggleLangDropdown()" class="flex items-center gap-1 dyn-text-dark font-bold text-xs md:text-sm uppercase px-3 py-1.5 md:px-4 md:py-2 rounded-full border dyn-border dyn-hover transition focus:outline-none">
-                            <span id="current-lang-label">ID</span>
+                            <span id="current-lang-label">IDN</span>
                             <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         
-                        <!-- Lang Dropdown Content -->
-                        <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-24 rounded-xl shadow-lg bg-[var(--bg-card)] ring-1 ring-black ring-opacity-5 focus:outline-none z-50 border dyn-border overflow-hidden">
+                        <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-32 rounded-xl shadow-lg bg-[var(--bg-card)] ring-1 ring-black ring-opacity-5 focus:outline-none z-50 border dyn-border overflow-hidden">
                             <div class="py-1">
-                                <button onclick="setLang('id')" class="block w-full text-left px-4 py-2.5 text-xs font-bold dyn-text-dark dyn-hover transition">ID - Indo</button>
-                                <button onclick="setLang('en')" class="block w-full text-left px-4 py-2.5 text-xs font-bold dyn-text-dark dyn-hover transition">EN - Eng</button>
-                                <button onclick="setLang('jp')" class="block w-full text-left px-4 py-2.5 text-xs font-bold dyn-text-dark dyn-hover transition">JP - Jpn</button>
+                                <button onclick="setLang('id')" class="block w-full text-left px-4 py-3 text-xs font-bold dyn-text-dark dyn-hover transition uppercase">IDN</button>
+                                <button onclick="setLang('en')" class="block w-full text-left px-4 py-3 text-xs font-bold dyn-text-dark dyn-hover transition uppercase">ENGLISH</button>
+                                <button onclick="setLang('jp')" class="block w-full text-left px-4 py-3 text-xs font-bold dyn-text-dark dyn-hover transition uppercase">日本語</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Mobile: 3-Dot Button -->
-                    <button id="hamburger-btn" onclick="toggleMenu()" class="md:hidden dyn-text-dark focus:outline-none p-1 hover:opacity-60 transition ml-1">
+                    <button id="hamburger-btn" onclick="toggleMenu()" class="md:hidden dyn-text-dark focus:outline-none p-1 hover:opacity-60 transition">
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                             <circle cx="12" cy="5" r="2.5" />
                             <circle cx="12" cy="12" r="2.5" />
@@ -188,7 +200,6 @@
             </div>
         </div>
 
-        <!-- Mobile Dropdown Menu (Sections) -->
         <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 w-full bg-[var(--bg-card)] border-b dyn-border-bottom shadow-lg">
             <div class="px-4 py-3 space-y-2">
                 <a href="#profile" onclick="toggleMenu()" class="block px-4 py-3 dyn-text-dark text-sm font-semibold uppercase tracking-wider dyn-hover rounded-lg transition">Profile</a>
@@ -198,64 +209,59 @@
         </div>
     </nav>
 
-    <!-- 1. Hero / Header Image Section -->
-    <div class="relative w-full h-[50vh] md:h-[65vh] overflow-hidden dyn-bg-sec">
-        <!-- Big Hero Background -->
+    <!-- 1. Hero Image -->
+    <div class="relative w-full h-[45vh] md:h-[60vh] overflow-hidden dyn-bg-sec">
         <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
              alt="Japan Scenery" 
              class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay">
-        
-        <!-- Gradient Overlay to blend with background -->
-        <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-main)] via-[var(--bg-main)]/50 to-transparent opacity-95 transition-colors duration-500"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-main)] via-[var(--bg-main)]/30 to-transparent opacity-95 transition-colors duration-500"></div>
     </div>
 
-    <!-- 2. Title & Meta Section -->
-    <div id="profile" class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 -mt-40 md:-mt-52 mb-10 pt-4 hero-fade-in">
-        <h1 data-i18n="title" class="font-poppins font-black text-5xl md:text-6xl lg:text-7xl tracking-tight dyn-text mb-2 drop-shadow-sm">
+    <!-- 2. Title Section -->
+    <div id="profile-trigger" class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 -mt-32 md:-mt-44 mb-8 pt-4 hero-fade-in">
+        <h1 data-i18n="title" class="font-poppins font-black text-3xl md:text-5xl lg:text-6xl tracking-tight dyn-text mb-2 drop-shadow-sm">
             DESTI'S<br>JOURNEY
         </h1>
-        <p data-i18n="meta" class="text-sm md:text-base font-medium dyn-text-muted tracking-wide">
+        <p data-i18n="meta" class="meta-text text-xs md:text-base dyn-text-muted tracking-wide max-w-2xl">
             Perjalanan 7 Hari Study Trip di Jepang: Cerita dan Pengalaman
         </p>
     </div>
 
-    <!-- 3. Profile Info Section -->
-    <div class="max-w-6xl mx-auto px-6 md:px-10 flex flex-col md:flex-row gap-8 md:gap-12 mb-16 reveal">
-        
-        <!-- Poster Thumbnail -->
-        <div class="w-32 md:w-48 shrink-0">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                 alt="Poster" 
-                 class="w-full h-auto rounded-xl shadow-lg border-4 dyn-border transition-colors">
-            <div data-i18n="poster_title" class="text-center mt-3 font-poppins font-bold text-base md:text-lg tracking-wider dyn-text whitespace-nowrap">
-                Desti Puspita
+    <!-- 3. Profile Information Card -->
+    <div class="max-w-6xl mx-auto px-4 md:px-10 mb-16">
+        <div id="profile" class="dyn-bg-card border dyn-border rounded-[2rem] p-6 md:p-12 flex flex-col md:flex-row gap-8 md:gap-12 shadow-sm reveal">
+            <div class="w-full md:w-[320px] shrink-0">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                     alt="Poster" 
+                     class="w-full h-auto rounded-2xl shadow-lg border-4 dyn-border transition-colors">
+                <div data-i18n="poster_title" class="text-center mt-6 font-poppins font-semibold text-[10px] md:text-xs tracking-[0.4em] uppercase dyn-text bg-[var(--bg-secondary)] py-2.5 rounded-full shadow-sm whitespace-nowrap opacity-90">
+                    Desti Puspita
+                </div>
             </div>
-        </div>
 
-        <!-- Synopsis & Credits -->
-        <div class="flex-1 flex flex-col justify-center">
-            <h3 data-i18n="author" class="font-bold dyn-text text-lg tracking-wide mb-1">Author: Desti</h3>
-            <p data-i18n="locations" class="text-sm dyn-text-muted font-medium mb-4">Locations : Tokyo University, Shibuya, Asakusa, Local Homestay</p>
-            
-            <p data-i18n="synopsis" class="text-sm md:text-base leading-relaxed mb-6 max-w-3xl dyn-text opacity-90 font-light text-justify">
-                Nama pemenang lomba disebut, dan itu namaku. Dari semua kemungkinan yang kubayangkan, ini yang paling tidak terduga: aku terbang ke Jepang. Awalnya aku merasa tidak percaya diri dan mengira keberhasilanku hanyalah kebetulan semata. Namun, perjalanan tujuh hari di negeri sakura ini perlahan merombak total cara pandangku tentang usaha, kedisiplinan, dan menemukan validasi dari dalam diri sendiri, bukan dari pengakuan orang lain.
-            </p>
-            
-            <!-- Tags (Genre style) -->
-            <div class="flex flex-wrap gap-3">
-                <button data-i18n="tag_1" class="border dyn-border bg-[var(--bg-card)] rounded-full px-5 py-1.5 text-xs font-semibold tracking-wide dyn-hover hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none shadow-sm">Documentary</button>
-                <button data-i18n="tag_2" class="border dyn-border bg-[var(--bg-card)] rounded-full px-5 py-1.5 text-xs font-semibold tracking-wide dyn-hover hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none shadow-sm">Personal Growth</button>
-                <button data-i18n="tag_3" class="border dyn-border bg-[var(--bg-card)] rounded-full px-5 py-1.5 text-xs font-semibold tracking-wide dyn-hover hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none shadow-sm">Slice of Life</button>
+            <div class="flex-1 flex flex-col justify-center">
+                <h3 data-i18n="author" class="font-bold dyn-text text-lg md:text-xl tracking-wide mb-1">Penulis: Desti Puspita</h3>
+                <p data-i18n="locations" class="text-xs md:text-sm dyn-text-muted font-medium mb-6">Lokasi : Universitas Tokyo, Shibuya, Asakusa, Homestay Lokal</p>
+                
+                <p data-i18n="synopsis" class="text-sm md:text-base leading-relaxed mb-8 max-w-3xl dyn-text opacity-90 font-light text-justify">
+                    Nama pemenang lomba disebut, dan itu namaku. Dari semua kemungkinan yang kubayangkan, ini yang paling tidak terduga: aku terbang ke Jepang. Awalnya aku merasa tidak percaya diri dan mengira keberhasilanku hanyalah kebetulan semata. Namun, perjalanan tujuh hari di negeri sakura ini perlahan merombak total cara pandangku tentang usaha, kedisiplinan, dan menemukan validasi dari dalam diri sendiri.
+                </p>
+                
+                <div class="flex flex-wrap gap-3">
+                    <button data-i18n="tag_1" class="border dyn-border bg-[var(--bg-main)] rounded-full px-5 py-1.5 text-[10px] md:text-xs font-semibold tracking-wide dyn-hover hover:scale-105 active:scale-95 transition-all duration-300 shadow-sm focus:outline-none">Dokumenter</button>
+                    <button data-i18n="tag_2" class="border dyn-border bg-[var(--bg-main)] rounded-full px-5 py-1.5 text-[10px] md:text-xs font-semibold tracking-wide dyn-hover hover:scale-105 active:scale-95 transition-all duration-300 shadow-sm focus:outline-none">Pengembangan Diri</button>
+                    <button data-i18n="tag_3" class="border dyn-border bg-[var(--bg-main)] rounded-full px-5 py-1.5 text-[10px] md:text-xs font-semibold tracking-wide dyn-hover hover:scale-105 active:scale-95 transition-all duration-300 shadow-sm focus:outline-none">Kisah Nyata</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- 4. Interactive Carousel Gallery Section -->
+    <!-- 4. Gallery - Larger Sizing -->
     <div id="gallery" class="w-full pt-10 reveal">
         <div class="text-center mb-6 px-4 flex flex-col md:flex-row justify-between items-center max-w-[1400px] mx-auto">
-            <div class="w-10 hidden md:block"></div> <!-- spacer -->
+            <div class="w-10 hidden md:block"></div>
             <div>
-                <h4 data-i18n="gallery_title" class="font-poppins font-bold text-sm tracking-[0.3em] uppercase dyn-text mb-2">Gallery</h4>
+                <h4 data-i18n="gallery_title" class="font-poppins font-bold text-sm tracking-[0.3em] uppercase dyn-text mb-2">Galeri</h4>
                 <div class="w-16 h-1 bg-[var(--bg-secondary)] mx-auto rounded-full"></div>
             </div>
             <div class="mt-4 md:mt-0 flex gap-2">
@@ -268,198 +274,131 @@
             </div>
         </div>
 
-        <!-- Scrollable Carousel Container -->
         <div class="max-w-[1400px] mx-auto px-4 relative mb-20">
             <div id="carousel-container" class="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-6 scroll-smooth pt-4">
-                
-                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
-                    <img src="https://images.unsplash.com/photo-1542051812899-25bb1c10777e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Shibuya">
-                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm">SHIBUYA</div>
+                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[50%] lg:w-[45%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
+                    <img src="https://images.unsplash.com/photo-1542051812899-25bb1c10777e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Shibuya">
+                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm uppercase">Shibuya</div>
                 </div>
-                
-                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
-                    <img src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Asakusa">
-                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm">ASAKUSA</div>
+                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[50%] lg:w-[45%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
+                    <img src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Asakusa">
+                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm uppercase">Asakusa</div>
                 </div>
-                
-                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
-                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Tokyo Uni">
-                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm">TOKYO UNIVERSITY</div>
+                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[50%] lg:w-[45%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
+                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Tokyo Uni">
+                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm uppercase">Tokyo University</div>
                 </div>
-                
-                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
-                    <img src="https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Nature">
-                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm">UENO PARK</div>
+                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[50%] lg:w-[45%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
+                    <img src="https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Nature">
+                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm uppercase">Ueno Park</div>
                 </div>
-                
-                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
-                    <img src="https://images.unsplash.com/photo-1528360354687-839420409a6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Homestay Food">
-                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm">HOMESTAY MEALS</div>
+                <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[50%] lg:w-[45%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
+                    <img src="https://images.unsplash.com/photo-1528360354687-839420409a6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Homestay">
+                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm uppercase">Homestay Meals</div>
                 </div>
-
-                <div class="carousel-item snap-center shrink-0 w-[80%] md:w-[40%] lg:w-[30%] overflow-hidden dyn-bg-sec aspect-video relative cursor-pointer rounded-2xl border dyn-border shadow-md">
-                    <img src="https://images.unsplash.com/photo-1480796927426-f609979314bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="carousel-img w-full h-full object-cover opacity-90" alt="Tokyo Streets">
-                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur text-gray-900 px-3 py-1 rounded-md text-xs font-bold tracking-wider shadow-sm">TOKYO STREETS</div>
-                </div>
-
             </div>
         </div>
     </div>
 
-    <!-- 5. Centered Quote -->
-    <div class="text-center px-6 mb-20 max-w-4xl mx-auto reveal">
-        <p data-i18n="quote_text" class="font-quote italic font-normal text-lg md:text-xl dyn-text tracking-wide leading-relaxed opacity-80">
-            "Kadang Tuhan tidak menunggu kita sempurna dulu, Dia cuma menunggu kita mau melangkah."
-        </p>
+    <!-- 5. Centered Quote: Mobile 2 Lines Constraint -->
+    <div class="text-center px-6 mb-24 max-w-4xl mx-auto reveal">
+        <div class="max-w-[320px] md:max-w-3xl mx-auto">
+            <p data-i18n="quote_text" class="font-quote italic font-normal text-base md:text-2xl lg:text-3xl dyn-text tracking-wide leading-relaxed opacity-80 mb-6">
+                "Kadang Tuhan tidak menunggu kita sempurna dulu, Dia cuma menunggu kita mau melangkah."
+            </p>
+            <p class="font-light text-[9px] md:text-xs tracking-[0.4em] uppercase opacity-40 dyn-text">
+                desti puspita
+            </p>
+        </div>
     </div>
 
-    <!-- 6. Bottom Story Section (Expanded Content) -->
-    <div id="story" class="dyn-bg-bottom w-full dyn-text-dark transition-colors duration-500 pt-8 reveal shadow-inner">
-        
-        <!-- Divider Bar -->
-        <div class="w-full dyn-border-bottom border-b py-4 px-6 md:px-10 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div data-i18n="bottom_bar_title" class="font-bold text-sm tracking-widest dyn-text-dark uppercase">
-                日本の旅 | Desti's Expanded Journal
-            </div>
-            <div class="flex items-center gap-4 text-gray-500">
-                <!-- Anchor back to top -->
-                <a href="#profile" class="flex items-center gap-2 hover:opacity-70 dyn-text-dark transition">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
-                    <span data-i18n="back_to_top" class="text-xs font-bold uppercase tracking-wider">Back to Top</span>
-                </a>
+    <!-- 6. Bottom Story Journal -->
+    <div id="story" class="dyn-bg-bottom w-full transition-colors duration-500 pt-8 reveal shadow-inner">
+        <div class="w-full border-b dyn-border-bottom-sec py-4 px-6 md:px-10 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div data-i18n="bottom_bar_title" class="font-bold text-sm tracking-widest dyn-text-bottom-h uppercase">
+                日本の旅 | Jurnal Lengkap Desti
             </div>
         </div>
 
-        <!-- Story Chapters (4 Column Grid with longer text) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 dyn-border-bottom border-b">
-            
-            <!-- Chapter 1: Tokyo Uni -->
-            <div class="p-8 dyn-border-bottom border-r border-b lg:border-b-0 dyn-hover transition cursor-default group reveal">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 border-b dyn-border-bottom-sec">
+            <div class="p-8 border-r border-b lg:border-b-0 dyn-border-bottom-sec dyn-hover-bottom transition cursor-default group reveal">
                 <div class="overflow-hidden rounded-xl mb-5 shadow-sm">
-                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Tokyo University" class="w-full aspect-video object-cover group-hover:scale-110 transition-transform duration-700">
+                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Tokyo Uni" class="w-full aspect-video object-cover group-hover:scale-110 transition-transform duration-700">
                 </div>
-                <h5 data-i18n="ch1_title" class="font-poppins font-bold text-xl dyn-text-dark mb-4 transition">Universitas Tokyo</h5>
-                <p data-i18n="ch1_text" class="text-sm dyn-text-dark-muted leading-loose text-justify">
-                    Selama 5 hari aku belajar di lingkungan akademik bergengsi ini. Pengalaman ini bukan semata-mata tentang seberapa sulit kurikulum yang diberikan, melainkan tentang mengobservasi cara mereka berpikir secara kritis. Kedisiplinan mahasiswa di kelas berada di level yang benar-benar berbeda; waktu sangat dihargai dan etos kerja terlihat dari hal-hal kecil. Di aula kampus yang megah itu, aku menyadari bahwa dunia ini sangat luas dan aku masih memiliki banyak ruang kosong yang harus diisi untuk terus bertumbuh.
-                </p>
+                <h5 data-i18n="ch1_title" class="font-poppins font-bold text-lg md:text-xl dyn-text-bottom-h mb-4 dyn-accent-hover transition">Universitas Tokyo</h5>
+                <p data-i18n="ch1_text" class="text-sm dyn-text-bottom-p leading-loose text-justify">Selama 5 hari aku belajar di lingkungan akademik bergengsi ini. Kedisiplinan mahasiswa di kelas berada di level yang benar-benar berbeda.</p>
             </div>
 
-            <!-- Chapter 2: Homestay -->
-            <div class="p-8 dyn-border-bottom border-r border-b lg:border-b-0 dyn-hover transition cursor-default group reveal">
+            <div class="p-8 border-r border-b lg:border-b-0 dyn-border-bottom-sec dyn-hover-bottom transition cursor-default group reveal">
                 <div class="overflow-hidden rounded-xl mb-5 shadow-sm">
                     <img src="https://images.unsplash.com/photo-1528360354687-839420409a6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Homestay" class="w-full aspect-video object-cover group-hover:scale-110 transition-transform duration-700">
                 </div>
-                <h5 data-i18n="ch2_title" class="font-poppins font-bold text-xl dyn-text-dark mb-4 transition">Keluarga Baru</h5>
-                <p data-i18n="ch2_text" class="text-sm dyn-text-dark-muted leading-loose text-justify">
-                    Tinggal bersama keluarga asli Jepang selama 7 hari bukan sekadar mencari tempat menumpang tidur, melainkan sebuah pertukaran kehidupan. Awalnya terasa canggung karena keterbatasan bahasa; aku sering salah ucap dan mengandalkan bahasa tubuh. Namun, di meja makan yang hangat sambil menyantap masakan rumahan, aku belajar bahasa Jepang jauh lebih cepat dari buku teks mana pun. Keluarga ini menerima kekuranganku dengan senyum tulus yang meruntuhkan segala kecemasanku.
-                </p>
+                <h5 data-i18n="ch2_title" class="font-poppins font-bold text-lg md:text-xl dyn-text-bottom-h mb-4 dyn-accent-hover transition">Keluarga Baru</h5>
+                <p data-i18n="ch2_text" class="text-sm dyn-text-bottom-p leading-loose text-justify">Tinggal bersama keluarga asli Jepang selama 7 hari bukan sekadar mencari tempat tidur, melainkan pertukaran kehidupan yang hangat.</p>
             </div>
 
-            <!-- Chapter 3: Culture -->
-            <div class="p-8 dyn-border-bottom border-r border-b lg:border-b-0 dyn-hover transition cursor-default group reveal">
+            <div class="p-8 border-r border-b lg:border-b-0 dyn-border-bottom-sec dyn-hover-bottom transition cursor-default group reveal">
                 <div class="overflow-hidden rounded-xl mb-5 shadow-sm">
                     <img src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Culture" class="w-full aspect-video object-cover group-hover:scale-110 transition-transform duration-700">
                 </div>
-                <h5 data-i18n="ch3_title" class="font-poppins font-bold text-xl dyn-text-dark mb-4 transition">Tiga Pelajaran Utama</h5>
-                <p data-i18n="ch3_text" class="text-sm dyn-text-dark-muted leading-loose text-justify">
-                    Menginjakkan kaki di fasilitas umum Tokyo memberikan tiga pukulan realita. Pertama, disiplin yang sudah menjadi insting alami, bukan paksaan aturan. Kedua, kebersihan ekstrem yang dipertahankan karena rasa hormat pada orang lain yang akan menggunakan fasilitas yang sama. Ketiga, keramahan yang tetap hangat meski aku adalah orang asing yang sering tersesat di stasiun kereta. Melihat harmoni sosial ini memunculkan pertanyaan di benakku: jika mereka bisa menjadikan kebaikan sebagai kebiasaan sehari-hari, mengapa aku tidak bisa memulainya sekarang?
-                </p>
+                <h5 data-i18n="ch3_title" class="font-poppins font-bold text-xl dyn-text-bottom-h mb-4 dyn-accent-hover transition">Tiga Pelajaran Utama</h5>
+                <p data-i18n="ch3_text" class="text-sm dyn-text-bottom-p leading-loose text-justify">Kedisiplinan yang sudah menjadi insting alami, kebersihan ekstrem, dan keramahan yang tulus meski kepada orang asing.</p>
             </div>
 
-            <!-- Chapter 4: Conclusion -->
-            <div class="p-8 dyn-hover transition cursor-default group reveal">
+            <div class="p-8 dyn-hover-bottom transition cursor-default group reveal">
                 <div class="overflow-hidden rounded-xl mb-5 shadow-sm">
-                    <img src="https://images.unsplash.com/photo-1542051812899-25bb1c10777e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Journey" class="w-full aspect-video object-cover group-hover:scale-110 transition-transform duration-700">
+                    <img src="https://images.unsplash.com/photo-1542051812899-25bb1c10777e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Reflection" class="w-full aspect-video object-cover group-hover:scale-110 transition-transform duration-700">
                 </div>
-                <h5 data-i18n="ch4_title" class="font-poppins font-bold text-xl dyn-text-dark mb-4 transition">Sebuah Refleksi Akhir</h5>
-                <p data-i18n="ch4_text" class="text-sm dyn-text-dark-muted leading-loose text-justify">
-                    Perjalanan tak terduga ini akhirnya mengajarkanku sesuatu yang lebih dari sekadar mengagumi keindahan budaya asing. Ini adalah perjalanan menembus keraguanku sendiri. Aku belajar bahwa aku tidak perlu menunggu pengakuan manusia untuk merasa berharga. Ada banyak momen sepi saat aku berjalan menelusuri trotoar Tokyo, namun di sana aku merasa didampingi oleh keyakinan yang baru. Saat tak ada seorang pun yang melihat usahamu, bukan berarti jalanmu sia-sia. Percayalah, kau tidak pernah melangkah sendirian.
-                </p>
+                <h5 data-i18n="ch4_title" class="font-poppins font-bold text-lg md:text-xl dyn-text-bottom-h mb-4 dyn-accent-hover transition">Sebuah Refleksi Akhir</h5>
+                <p data-i18n="ch4_text" class="text-sm dyn-text-bottom-p leading-loose text-justify">Perjalanan tak terduga ini akhirnya mengajarkanku sesuatu yang lebih dari sekadar mengagumi keindahan budaya asing.</p>
             </div>
-
         </div>
         
-        <!-- Bottom Footer margin -->
-        <div class="py-10 text-center dyn-bg-bottom border-t dyn-border-bottom transition-colors reveal">
-            <p data-i18n="footer" class="text-xs dyn-text-dark-muted uppercase tracking-[0.4em] font-bold">End of the Journey</p>
+        <!-- Footer & Visible Back to Top Button -->
+        <div class="py-14 text-center dyn-bg-bottom border-t dyn-border-bottom-sec transition-colors reveal relative">
+            <p data-i18n="footer" class="text-xs dyn-text-bottom-p uppercase tracking-[0.4em] font-bold opacity-60">End of the Journey</p>
+            
+            <a href="#profile-trigger" class="absolute bottom-6 right-6 md:right-10 flex items-center gap-2 opacity-60 hover:opacity-100 transition duration-300 dyn-text-bottom-h focus:outline-none z-40 group">
+                <span data-i18n="back_to_top" class="font-light text-xs lowercase tracking-widest group-hover:translate-x-[-2px] transition-transform">kembali ke atas</span>
+                <svg class="w-4 h-4 stroke-[1.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+            </a>
         </div>
-
     </div>
 
-    <!-- JavaScript Logic: Translation, Theming, Dropdown, Carousel, Scroll Reveal -->
     <script>
-        // --- 1. Language Translation Dictionary ---
+        const langLabels = { id: 'IDN', en: 'ENGLISH', jp: '日本語' };
         const translations = {
             id: {
                 title: "DESTI'S<br>JOURNEY",
                 meta: "Perjalanan 7 Hari Study Trip di Jepang: Cerita dan Pengalaman",
-                poster_title: "Desti Puspita",
-                author: "Penulis: Desti Puspita",
+                poster_title: "Desti Puspita", author: "Penulis: Desti Puspita",
                 locations: "Lokasi : Universitas Tokyo, Shibuya, Asakusa, Homestay Lokal",
-                synopsis: "Nama pemenang lomba disebut, dan itu namaku. Dari semua kemungkinan yang kubayangkan, ini yang paling tidak terduga: aku terbang ke Jepang. Awalnya aku merasa tidak percaya diri dan mengira keberhasilanku hanyalah kebetulan semata. Namun, perjalanan tujuh hari di negeri sakura ini perlahan merombak total cara pandangku tentang usaha, kedisiplinan, dan menemukan validasi dari dalam diri sendiri, bukan dari pengakuan orang lain.",
-                tag_1: "Dokumenter",
-                tag_2: "Pengembangan Diri",
-                tag_3: "Kisah Nyata",
-                gallery_title: "Galeri",
-                quote_text: '"Kadang Tuhan tidak menunggu kita sempurna dulu, Dia cuma menunggu kita mau melangkah."',
-                bottom_bar_title: "日本の旅 | Jurnal Lengkap Desti",
-                back_to_top: "Kembali ke Atas",
-                ch1_title: "Universitas Tokyo",
-                ch1_text: "Selama 5 hari aku belajar di lingkungan akademik bergengsi ini. Pengalaman ini bukan semata-mata tentang seberapa sulit kurikulum yang diberikan, melainkan tentang mengobservasi cara mereka berpikir secara kritis. Kedisiplinan mahasiswa di kelas berada di level yang benar-benar berbeda; waktu sangat dihargai dan etos kerja terlihat dari hal-hal kecil. Di aula kampus yang megah itu, aku menyadari bahwa dunia ini sangat luas dan aku masih memiliki banyak ruang kosong yang harus diisi untuk terus bertumbuh.",
-                ch2_title: "Keluarga Baru",
-                ch2_text: "Tinggal bersama keluarga asli Jepang selama 7 hari bukan sekadar mencari tempat menumpang tidur, melainkan sebuah pertukaran kehidupan. Awalnya terasa canggung karena keterbatasan bahasa; aku sering salah ucap dan mengandalkan bahasa tubuh. Namun, di meja makan yang hangat sambil menyantap masakan rumahan, aku belajar bahasa Jepang jauh lebih cepat dari buku teks mana pun. Keluarga ini menerima kekuranganku dengan senyum tulus yang meruntuhkan segala kecemasanku.",
-                ch3_title: "Tiga Pelajaran Utama",
-                ch3_text: "Menginjakkan kaki di fasilitas umum Tokyo memberikan tiga pukulan realita. Pertama, disiplin yang sudah menjadi insting alami, bukan paksaan aturan. Kedua, kebersihan ekstrem yang dipertahankan karena rasa hormat pada orang lain yang akan menggunakan fasilitas yang sama. Ketiga, keramahan yang tetap hangat meski aku adalah orang asing yang sering tersesat di stasiun kereta. Melihat harmoni sosial ini memunculkan pertanyaan di benakku: jika mereka bisa menjadikan kebaikan sebagai kebiasaan sehari-hari, mengapa aku tidak bisa memulainya sekarang?",
-                ch4_title: "Sebuah Refleksi Akhir",
-                ch4_text: "Perjalanan tak terduga ini akhirnya mengajarkanku sesuatu yang lebih dari sekadar mengagumi keindahan budaya asing. Ini adalah perjalanan menembus keraguanku sendiri. Aku belajar bahwa aku tidak perlu menunggu pengakuan manusia untuk merasa berharga. Ada banyak momen sepi saat aku berjalan menelusuri trotoar Tokyo, namun di sana aku merasa didampingi oleh keyakinan yang baru. Saat tak ada seorang pun yang melihat usahamu, bukan berarti jalanmu sia-sia. Percayalah, kau tidak pernah melangkah sendirian.",
+                synopsis: "Nama pemenang lomba disebut, dan itu namaku. Perjalanan tujuh hari ini merombak total cara pandangku tentang usaha dan kedisiplinan.",
+                gallery_title: "Galeri", quote_text: '"Kadang Tuhan tidak menunggu kita sempurna dulu, Dia cuma menunggu kita mau melangkah."',
+                bottom_bar_title: "日本の旅 | Jurnal Lengkap Desti", back_to_top: "kembali ke atas",
+                ch1_title: "Universitas Tokyo", ch2_title: "Keluarga Baru", ch3_title: "Tiga Pelajaran Utama", ch4_title: "Sebuah Refleksi Akhir",
                 footer: "Akhir dari Perjalanan"
             },
             en: {
                 title: "DESTI'S<br>JOURNEY",
                 meta: "7-Day Study Trip in Japan: Stories and Experiences",
-                poster_title: "Desti Puspita",
-                author: "Author: Desti Puspita",
+                poster_title: "Desti Puspita", author: "Author: Desti Puspita",
                 locations: "Locations : Tokyo University, Shibuya, Asakusa, Local Homestay",
-                synopsis: "The winner's name was announced, and it was mine. Of all the possibilities I imagined, this was the most unexpected: flying to Japan. Initially, I felt insecure and thought my success was mere coincidence. However, this seven-day journey in the land of cherry blossoms slowly completely transformed my perspective on effort, discipline, and finding validation from within, rather than from the acknowledgment of others.",
-                tag_1: "Documentary",
-                tag_2: "Personal Growth",
-                tag_3: "Slice of Life",
-                gallery_title: "Gallery",
-                quote_text: '"Sometimes God does not wait for us to be perfect; He just waits for us to be willing to take a step."',
-                bottom_bar_title: "日本の旅 | Desti's Expanded Journal",
-                back_to_top: "Back to Top",
-                ch1_title: "The University of Tokyo",
-                ch1_text: "For 5 days, I studied in this prestigious academic environment. This experience was not just about the difficulty of the curriculum, but about observing their critical thinking process. The students' discipline in class was on a completely different level; time is highly valued and work ethic is visible in the smallest details. In those grand lecture halls, I realized how vast the world is and how much empty space I still have to fill in order to keep growing.",
-                ch2_title: "A New Family",
-                ch2_text: "Staying with a native Japanese family for 7 days was not just about finding a place to sleep, but an exchange of lives. Initially, it felt awkward due to the language barrier; I often misspoke and relied heavily on body language. However, at the warm dining table eating home-cooked meals, I learned Japanese much faster than from any textbook. This family accepted my shortcomings with sincere smiles that tore down all my anxieties.",
-                ch3_title: "Three Core Lessons",
-                ch3_text: "Stepping into Tokyo's public facilities delivered three reality checks. First, discipline that has become a natural instinct, not forced rules. Second, extreme cleanliness maintained out of respect for others who will use the same facilities. Third, genuine warmth even though I was a foreigner who frequently got lost in train stations. Witnessing this social harmony sparked a question in my mind: if they can make goodness a daily habit, why can't I start doing the same right now?",
-                ch4_title: "A Final Reflection",
-                ch4_text: "This unexpected journey ultimately taught me something more than just admiring the beauty of a foreign culture. It was a journey breaking through my own doubts. I learned that I do not need to wait for human validation to feel worthy. There were many quiet moments when I walked along the sidewalks of Tokyo, yet there I felt accompanied by a new conviction. Just because no one sees your effort doesn't mean your path is in vain. Believe me, you never walk alone.",
+                synopsis: "The winner's name was announced, and it was mine. This seven-day journey completely transformed my perspective on effort and discipline.",
+                gallery_title: "Gallery", quote_text: '"Sometimes God does not wait for us to be perfect; He just waits for us to be willing to take a step."',
+                bottom_bar_title: "日本の旅 | Desti's Expanded Journal", back_to_top: "back to top",
+                ch1_title: "The University of Tokyo", ch2_title: "A New Family", ch3_title: "Three Core Lessons", ch4_title: "A Final Reflection",
                 footer: "End of the Journey"
             },
             jp: {
                 title: "DESTI'S<br>JOURNEY",
                 meta: "日本での7日間のスタディトリップ：物語と経験",
-                poster_title: "デスティ・プスピタ",
-                author: "著者: デスティ・プスピタ",
+                poster_title: "デスティ・プスピタ", author: "著者: デスティ・プスピタ",
                 locations: "場所 : 東京大学、渋谷、浅草、地元のホームステイ",
-                synopsis: "優勝者の名前が発表され、それは私の名前でした。想像していたすべての可能性の中で、日本へ飛ぶことは最も予想外のことでした。当初、私は自信がなく、自分の成功は単なる偶然だと思っていました。しかし、この桜の国での7日間の旅は、努力、規律、そして他人の承認からではなく内面から自己肯定感を見出すことへの私の考え方をゆっくりと完全に変えました。",
-                tag_1: "ドキュメンタリー",
-                tag_2: "自己成長",
-                tag_3: "日常の風景",
-                gallery_title: "ギャラリー",
-                quote_text: '「神様は私たちが完璧になるのを待つのではなく、ただ私たちが一歩を踏み出すのを待っている時があります。」',
-                bottom_bar_title: "日本の旅 | デスティの詳細な日記",
-                back_to_top: "トップへ戻る",
-                ch1_title: "東京大学",
-                ch1_text: "5日間、私はこの権威ある学問的環境で学びました。この経験は、カリキュラムの難しさだけではなく、彼らの批判的思考プロセスを観察することについてでした。クラスでの学生の規律は全く異なるレベルにありました。時間は高く評価され、労働倫理は細部にまで表れています。壮大な講堂で、私は世界がどれほど広く、自分が成長し続けるために満たすべき空白がまだどれほどあるかを悟りました。",
-                ch2_title: "新しい家族",
-                ch2_text: "日本の家族と7日間滞在したことは、単に寝る場所を見つけることではなく、人生の交流でした。言葉の壁のせいで最初は気まずく感じました。言い間違えたり、身振りに大きく頼ったりしました。しかし、温かい食卓で家庭料理を食べながら、私はどの教科書よりもはるかに早く日本語を学びました。この家族は、私の不安をすべて打ち砕くような心からの笑顔で私の欠点を受け入れてくれました。",
-                ch3_title: "3つの重要な教訓",
-                ch3_text: "東京の公共施設に足を踏み入れると、3つの現実を突きつけられました。第一に、強制された規則ではなく、自然な本能となっている規律。第二に、同じ施設を利用する他者への敬意から維持されている極度の清潔さ。第三に、駅で頻繁に迷子になる外国人である私に対する心からの温かさ。この社会的調和を目の当たりにして、私の心に疑問が湧きました。彼らが善を日々の習慣にできるのなら、なぜ私は今すぐ同じことを始められないのだろうかと。",
-                ch4_title: "最後の考察",
-                ch4_text: "この予期せぬ旅は、最終的に私に異文化の美しさを賞賛する以上のことを教えてくれました。それは私自身の疑念を打ち破る旅でした。自分が価値があると感じるために人間の承認を待つ必要はないと学びました。東京の歩道を歩いていると静かな瞬間がたくさんありましたが、そこで私は新しい確信に寄り添われているように感じました。誰もあなたの努力を見ていないからといって、あなたの道が無駄であるという意味ではありません。信じてください、あなたは決して一人で歩いているのではありません。",
+                synopsis: "優勝者の名前が発表され、それは私の名前でした。この桜の国での7日間の旅は、私の考え方をゆっくりと完全に変えました。",
+                gallery_title: "ギャラリー", quote_text: '「神様は私たちが完璧になるのを待つのではなく、ただ私たちが一歩を踏み出すのを待っている時があります。」',
+                bottom_bar_title: "日本の旅 | デスティの詳細な日記", back_to_top: "トップへ戻る",
+                ch1_title: "東京大学", ch2_title: "新しい家族", ch3_title: "3つの重要な教訓", ch4_title: "最後の考察",
                 footer: "旅の終わり"
             }
         };
@@ -469,24 +408,15 @@
 
         function typeWriter(element, text, speed) {
             clearInterval(typingTimer);
-            let i = 0;
-            let currentHTML = '';
+            let i = 0; let currentHTML = '';
             element.innerHTML = '<span class="typing-cursor"></span>';
-            
             typingTimer = setInterval(() => {
                 if (i < text.length) {
-                    // Pengecekan khusus untuk tag <br> agar dilewati dan tidak tercetak sebagai teks
-                    if (text.substring(i, i + 4) === '<br>') {
-                        currentHTML += '<br>';
-                        i += 4;
-                    } else {
-                        currentHTML += text.charAt(i);
-                        i++;
-                    }
+                    if (text.substring(i, i + 4) === '<br>') { currentHTML += '<br>'; i += 4; }
+                    else { currentHTML += text.charAt(i); i++; }
                     element.innerHTML = currentHTML + '<span class="typing-cursor"></span>';
                 } else {
                     clearInterval(typingTimer);
-                    // Hapus kursor setelah animasi mengetik selesai
                     element.innerHTML = currentHTML;
                 }
             }, speed);
@@ -494,113 +424,48 @@
 
         function setLang(lang) {
             currentLang = lang;
-            
-            // Set label on dropdown button
-            document.getElementById('current-lang-label').innerText = lang.toUpperCase();
-
-            // Update texts
-            const elements = document.querySelectorAll('[data-i18n]');
-            elements.forEach(el => {
+            document.getElementById('current-lang-label').innerText = langLabels[lang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[lang][key]) {
-                    if (key === 'title') {
-                        // Jalankan efek animasi ketik huruf SATU PER SATU (kecepatan diperlambat jadi 150ms)
-                        typeWriter(el, translations[lang][key], 150);
-                    } else {
-                        el.innerHTML = translations[lang][key];
-                    }
+                    if (key === 'title') typeWriter(el, translations[lang][key], 150);
+                    else el.innerHTML = translations[lang][key];
                 }
             });
-
-            // Close dropdown after selection
             document.getElementById('lang-dropdown').classList.add('hidden');
         }
 
-        // --- 2. Theme Toggle Logic (Light / Dark Pastel) ---
-        let isDarkMode = false; // Default is Light Pastel
-        
+        let isDarkMode = false;
         function toggleTheme() {
-            const body = document.body;
-            const iconDesktop = document.getElementById('theme-icon');
-            
+            const body = document.body; const icon = document.getElementById('theme-icon');
             isDarkMode = !isDarkMode;
-            
-            const moonIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>`;
-            const sunIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>`;
-
-            if (isDarkMode) {
-                // Switch to Dark Pastel
-                body.setAttribute('data-theme', 'dark');
-                if(iconDesktop) iconDesktop.innerHTML = sunIcon;
-            } else {
-                // Switch to Light Pastel
-                body.removeAttribute('data-theme');
-                if(iconDesktop) iconDesktop.innerHTML = moonIcon;
-            }
+            const moon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>`;
+            const sun = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>`;
+            if (isDarkMode) { body.setAttribute('data-theme', 'dark'); icon.innerHTML = sun; }
+            else { body.removeAttribute('data-theme'); icon.innerHTML = moon; }
         }
 
-        // --- 3. Language Dropdown Toggle ---
-        function toggleLangDropdown() {
-            const dropdown = document.getElementById('lang-dropdown');
-            if (dropdown.classList.contains('hidden')) {
-                dropdown.classList.remove('hidden');
-                dropdown.classList.add('menu-open');
-            } else {
-                dropdown.classList.add('hidden');
-                dropdown.classList.remove('menu-open');
-            }
-        }
-
-        // --- 4. Mobile Menu (Hamburger) Toggle ---
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            if (menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-                menu.classList.add('menu-open');
-            } else {
-                menu.classList.add('hidden');
-                menu.classList.remove('menu-open');
-            }
-        }
-
-        // Close dropdowns if clicked outside
-        window.addEventListener('click', function(e) {
-            // Lang dropdown
-            if (!document.getElementById('lang-dropdown').contains(e.target) && !e.target.closest('#lang-menu-btn')) {
-                document.getElementById('lang-dropdown').classList.add('hidden');
-            }
-            // Mobile hamburger menu
-            if (!document.getElementById('mobile-menu').contains(e.target) && !e.target.closest('#hamburger-btn')){
-                document.getElementById('mobile-menu').classList.add('hidden');
-            }
+        function toggleLangDropdown() { document.getElementById('lang-dropdown').classList.toggle('hidden'); }
+        function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+        
+        window.addEventListener('click', (e) => {
+            if (!document.getElementById('lang-dropdown').contains(e.target) && !e.target.closest('#lang-menu-btn')) document.getElementById('lang-dropdown').classList.add('hidden');
+            if (!document.getElementById('mobile-menu').contains(e.target) && !e.target.closest('#hamburger-btn')) document.getElementById('mobile-menu').classList.add('hidden');
         });
 
-        // --- 5. Interactive Carousel Logic ---
-        function scrollCarousel(direction) {
+        function scrollCarousel(dir) {
             const container = document.getElementById('carousel-container');
-            // Scroll by roughly the width of one item + gap
-            const scrollAmount = container.clientWidth * 0.4; 
-            container.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
+            container.scrollBy({ left: (container.clientWidth * 0.45) * dir, behavior: 'smooth' });
         }
 
-        // --- 6. Scroll Reveal Logic ---
         function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 50; 
-
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("active");
-                }
-            }
+            document.querySelectorAll(".reveal").forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active");
+            });
         }
         window.addEventListener("scroll", reveal);
-
-        // Initialize defaults
         setLang(currentLang);
-        reveal(); // Trigger reveal on load
+        reveal();
     </script>
 </body>
 </html>
