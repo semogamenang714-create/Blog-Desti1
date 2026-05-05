@@ -147,11 +147,24 @@
             display: inline-block;
             box-shadow: 0 4px 15px rgba(255, 77, 77, 0.15);
         }
+
+        /* Music Player Styles */
+        @keyframes wave {
+            0%, 100% { height: 4px; }
+            50% { height: 12px; }
+        }
+        
+        /* Show info on container hover (Desktop) */
+        #music-container:hover #track-info {
+            max-width: 200px;
+            opacity: 1;
+            margin-left: 8px;
+        }
     </style>
 </head>
 <body class="dyn-bg-main dyn-text">
 
-    <!-- Navigasi - Slimmer & Integrated (Pink to Red Gradient) -->
+    <!-- Navigasi -->
     <nav class="fixed top-0 w-full z-50 dyn-bg-nav border-b dyn-border-bottom transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-12 md:h-14">
@@ -257,7 +270,7 @@
         </div>
     </div>
 
-    <!-- 4. Gallery - Pink/Red Palette -->
+    <!-- 4. Gallery -->
     <div id="gallery" class="w-full pt-10 reveal">
         <div class="text-center mb-10 px-4 flex flex-col md:flex-row justify-between items-center max-w-[1400px] mx-auto gap-6">
             <div class="w-10 hidden md:block"></div>
@@ -276,7 +289,6 @@
 
         <div class="max-w-[1400px] mx-auto px-4 relative mb-20">
             <div id="carousel-container" class="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-10 scroll-smooth">
-                <!-- 8 Photos -->
                 <div class="carousel-item snap-center shrink-0 w-[85%] md:w-[45%] lg:w-[40%] overflow-hidden dyn-bg-sec aspect-video relative rounded-3xl border dyn-border shadow-md">
                     <img src="https://images.unsplash.com/photo-1542051812899-25bb1c10777e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="carousel-img w-full h-full object-cover" alt="Shibuya">
                     <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-[10px] text-red-600 font-bold tracking-widest uppercase">Shibuya</div>
@@ -315,8 +327,8 @@
 
     <!-- 5. Centered Quote -->
     <div class="text-center px-6 mb-24 max-w-4xl mx-auto reveal">
-        <div class="max-w-[300px] md:max-w-3xl mx-auto flex flex-col items-center">
-            <p data-i18n="quote_text" class="font-quote italic font-medium text-lg md:text-2xl lg:text-3xl dyn-text-dark tracking-wide leading-snug md:leading-relaxed opacity-90 mb-4 text-center">
+        <div class="max-w-[320px] md:max-w-3xl mx-auto flex flex-col items-center">
+            <p data-i18n="quote_text" class="font-quote italic font-medium text-sm sm:text-base md:text-2xl lg:text-3xl dyn-text-dark tracking-wide leading-snug md:leading-relaxed opacity-90 mb-4 text-center">
                 "Kadang Tuhan tidak menunggu kita sempurna dulu, Dia cuma menunggu kita mau melangkah."
             </p>
             <div class="w-12 h-[1px] bg-red-300 mb-4"></div>
@@ -379,6 +391,38 @@
         </div>
     </div>
 
+    <!-- Music Player Implementation -->
+    <div id="music-container" class="fixed bottom-6 left-6 z-[60] flex items-center gap-3">
+        <!-- Play/Pause Button -->
+        <button id="music-toggle" class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/80 backdrop-blur-md border dyn-border shadow-lg flex items-center justify-center text-red-400 hover:scale-110 active:scale-95 transition-all duration-300 group focus:outline-none">
+            <svg id="play-icon" class="w-5 h-5 md:w-6 md:h-6 fill-current" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+            </svg>
+            <svg id="pause-icon" class="hidden w-5 h-5 md:w-6 md:h-6 fill-current" viewBox="0 0 24 24">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+            
+            <!-- Animated Music Waves (Visible when playing) -->
+            <div id="music-waves" class="hidden absolute -top-1 flex gap-[2px] items-end h-4">
+                <div class="w-[2px] bg-red-400 animate-[wave_1s_ease-in-out_infinite] h-2"></div>
+                <div class="w-[2px] bg-red-400 animate-[wave_1.2s_ease-in-out_infinite] h-4"></div>
+                <div class="w-[2px] bg-red-400 animate-[wave_0.8s_ease-in-out_infinite] h-3"></div>
+            </div>
+        </button>
+
+        <!-- Track Info (Desktop only) -->
+        <div id="track-info" class="hidden md:block overflow-hidden max-w-0 opacity-0 transition-all duration-500 bg-white/60 backdrop-blur-sm px-4 py-2 rounded-2xl border dyn-border cursor-default">
+            <p class="text-[10px] font-bold text-red-400 uppercase tracking-widest leading-none mb-1">Sedang Diputar</p>
+            <p class="text-[12px] font-medium dyn-text-dark truncate">Yumetourou - RADWIMPS</p>
+        </div>
+    </div>
+
+    <!-- Audio Element: src file has to be relative to the html file on GitHub -->
+    <audio id="bgm" loop>
+        <source src="yumetourou.mp3" type="audio/mpeg">
+        Browser kamu tidak mendukung elemen audio ini.
+    </audio>
+
     <script>
         const langLabels = { id: 'IDN', en: 'ENGLISH', jp: '日本語' };
         const translations = {
@@ -387,7 +431,7 @@
                 meta: "Perjalanan 7 Hari Study Trip di Jepang:<br>Cerita dan Pengalaman",
                 poster_title: "Desti Puspita", author: "Penulis: Desti Puspita",
                 locations: "Lokasi : Universitas Tokyo, Shibuya, Asakusa, Homestay Lokal",
-                synopsis: "Nama pemenang lomba disebut, dan itu namaku. Perjalanan tujuh hari ini merombak total cara pandangku tentang usaha dan kedisiplinan.",
+                synopsis: "Nama pemenang lomba disebut, dan itu namaku. Dari semua kemungkinan yang kubayangkan, ini yang paling tidak terduga: aku terbang ke Jepang. Awalnya aku merasa tidak percaya diri dan mengira keberhasilanku hanyalah kebetulan semata. Namun, perjalanan tujuh hari di negeri sakura ini perlahan merombak total cara pandangku tentang usaha, kedisiplinan, dan menemukan validasi dari dalam diri sendiri.",
                 gallery_title: "Galeri", quote_text: '"Kadang Tuhan tidak menunggu kita sempurna dulu, Dia cuma menunggu kita mau melangkah."',
                 bottom_bar_title: "日本の旅 | Jurnal Lengkap Desti", back_to_top: "kembali ke atas",
                 ch1_title: "Universitas Tokyo", ch2_title: "Keluarga Baru", ch3_title: "Tiga Pelajaran Utama", ch4_title: "Sebuah Refleksi Akhir",
@@ -483,6 +527,46 @@
         window.addEventListener("scroll", reveal);
         setLang(currentLang);
         reveal();
+
+        /* --- MUSIC PLAYER SCRIPT --- */
+        const bgm = document.getElementById('bgm');
+        const musicToggle = document.getElementById('music-toggle');
+        const playIcon = document.getElementById('play-icon');
+        const pauseIcon = document.getElementById('pause-icon');
+        const musicWaves = document.getElementById('music-waves');
+        let isPlaying = false;
+
+        // Set volume ke 40% agar tidak terlalu keras saat membaca
+        bgm.volume = 0.4;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgm.pause();
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+                musicWaves.classList.add('hidden');
+            } else {
+                bgm.play().catch(error => {
+                    console.log("Autoplay was prevented by browser policies. User needs to interact first.");
+                });
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+                musicWaves.classList.remove('hidden');
+            }
+            isPlaying = !isPlaying;
+        }
+
+        musicToggle.addEventListener('click', toggleMusic);
+
+        // Munculkan music player perlahan saat halaman diload
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const musicContainer = document.getElementById('music-container');
+                if (musicContainer) {
+                    musicContainer.classList.add('hero-fade-in');
+                }
+            }, 1000);
+        });
     </script>
 </body>
 </html>
